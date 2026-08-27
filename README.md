@@ -2,7 +2,7 @@
 
 En lille web-app hvor børn på 5–10 år lærer engelske ord.
 
-**Prøv den:** https://BRUGERNAVN.github.io/ordjagt/
+**Prøv den:** https://leinadnesredna.github.io/ordjagt/
 
 ## Sådan virker den
 
