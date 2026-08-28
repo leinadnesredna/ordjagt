@@ -450,7 +450,9 @@ function answer(tile, opt){
     tile.classList.add("nope");
     tile.disabled = true;
     say(cur.en);
-    document.querySelectorAll(".tile").forEach(t=>{ if(t.textContent===cur.pic) t.classList.add("show"); });
+    if(document.querySelectorAll(".tile.nope").length >= 2){
+      document.querySelectorAll(".tile").forEach(t=>{ if(t.textContent===cur.pic) t.classList.add("show"); });
+    }
   }
 }
 
