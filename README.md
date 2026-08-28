@@ -6,14 +6,16 @@ En lille web-app hvor børn på 5–10 år lærer engelske ord.
 
 ## Sådan virker den
 
-Barnet går gennem ni baner med i alt 72 engelske hverdagsord. Hver bane har to
-dele: først vises ordene ét ad gangen med billede og udtale, derefter er der en
-leg, hvor barnet hører et ord og trykker på det rigtige billede.
+Appen er et søkort med ni øer og i alt 72 engelske hverdagsord. Barnet sejler
+fra ø til ø: først vises øens ord ét ad gangen med billede, udtale og det danske
+ord, derefter er der en leg, hvor barnet hører et ord og trykker på det rigtige
+billede. Klarer man øen, åbner en skattekiste, og skibet sejler videre til den
+næste ø.
 
-Et rigtigt svar giver farveglimt, konfetti og en glad lyd. Et forkert svar giver
-ingen straf — feltet falmer, ordet siges igen, og efter to forsøg vises det
-rigtige svar med en grøn kant. Hver klaret bane giver 1–3 stjerner og åbner den
-næste.
+Et rigtigt svar giver guldglimt, konfetti og en glad lyd. Et forkert svar giver
+ingen straf — feltet bliver rødt med et kryds, ordet siges igen, og efter to
+forsøg begynder det rigtige svar at banke med en grøn kant. Hver klaret ø giver
+1–3 guldmønter.
 
 ## Teknisk
 
