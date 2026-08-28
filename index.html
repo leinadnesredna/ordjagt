@@ -75,6 +75,7 @@
   }
   .pic{font-size:104px;line-height:1.15;user-select:none;filter:saturate(1.12)}
   .word{font-family:var(--display);font-size:44px;font-weight:800;color:var(--lvl);line-height:1}
+  .word-da{font-size:19px;font-weight:700;color:var(--ink-soft);margin-top:-4px}
   .speak{display:inline-flex;align-items:center;gap:8px;border:none;background:transparent;
     color:var(--ink-soft);font-family:var(--body);font-size:15px;font-weight:800;cursor:pointer;padding:6px}
   .speak svg{width:22px;height:22px}
@@ -103,16 +104,22 @@
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .tile{
     background:var(--card);border:3px solid var(--line);border-radius:26px;cursor:pointer;
-    aspect-ratio:1/1;display:grid;place-items:center;font-size:62px;line-height:1;
+    aspect-ratio:1/1;display:grid;place-items:center;font-size:62px;line-height:1;position:relative;
     transition:transform .12s ease,border-color .12s ease,background .12s ease;
   }
   .tile:active{transform:scale(.95)}
   .tile:focus-visible{outline:4px solid var(--ink);outline-offset:3px}
   .tile.yes{background:var(--kiwi);border-color:var(--kiwi);animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
   @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1.06)}}
-  .tile.nope{animation:wob .5s ease;opacity:.45}
+  .tile.nope{animation:wob .5s ease;background:#FCEBEB;border-color:#E24B4A;cursor:default}
+  .tile.nope .em{filter:grayscale(1);opacity:.35}
+  .tile.nope::after{
+    content:"✕";position:absolute;top:2px;right:12px;font-family:var(--body);
+    font-size:30px;font-weight:800;color:#A32D2D;filter:none;
+  }
   @keyframes wob{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
-  .tile.show{border-color:var(--kiwi);border-style:dashed}
+  .tile.show{border-color:var(--kiwi);animation:beat 1s ease-in-out infinite}
+  @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
   /* ---------- fejring + resultat ---------- */
   #flash{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:40;background:var(--kiwi)}
@@ -165,6 +172,7 @@
       <div class="learn-card" id="learncard" role="button" tabindex="0">
         <div class="pic" id="learnpic"></div>
         <div class="word" id="learnword"></div>
+        <div class="word-da" id="learnda"></div>
         <span class="speak">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 8.5a5 5 0 010 7"/></svg>
           Tryk for at høre
@@ -209,33 +217,42 @@
 
 <script>
 const LEVELS = [
-  {name:"Første ord", color:"#FF4D6D", words:[
-    {en:"hello",pic:"👋"},{en:"yes",pic:"👍"},{en:"no",pic:"👎"},{en:"please",pic:"🙏"},
-    {en:"thank you",pic:"🎁"},{en:"sorry",pic:"😢"},{en:"good",pic:"😄"},{en:"bad",pic:"😠"}]},
-  {name:"Min familie", color:"#FFA51F", words:[
-    {en:"mum",pic:"👩"},{en:"dad",pic:"👨"},{en:"boy",pic:"👦"},{en:"girl",pic:"👧"},
-    {en:"baby",pic:"👶"},{en:"grandma",pic:"👵"},{en:"grandpa",pic:"👴"},{en:"friend",pic:"🧑‍🤝‍🧑"}]},
+  {name:"Hej og følelser", color:"#FF4D6D", words:[
+    {en:"hello",da:"hej",pic:"👋"},{en:"yes",da:"ja",pic:"👍"},{en:"no",da:"nej",pic:"👎"},
+    {en:"happy",da:"glad",pic:"😀"},{en:"sad",da:"ked af det",pic:"😢"},{en:"angry",da:"vred",pic:"😠"},
+    {en:"sleepy",da:"træt",pic:"😴"},{en:"cold",da:"kold",pic:"🥶"}]},
+  {name:"Mennesker", color:"#FFA51F", words:[
+    {en:"mum",da:"mor",pic:"👩"},{en:"dad",da:"far",pic:"👨"},{en:"boy",da:"dreng",pic:"👦"},
+    {en:"girl",da:"pige",pic:"👧"},{en:"baby",da:"baby",pic:"👶"},{en:"grandma",da:"bedstemor",pic:"👵"},
+    {en:"grandpa",da:"bedstefar",pic:"👴"},{en:"police",da:"politi",pic:"👮"}]},
   {name:"Farver", color:"#3FBF6F", words:[
-    {en:"red",pic:"🟥"},{en:"blue",pic:"🟦"},{en:"green",pic:"🟩"},{en:"yellow",pic:"🟨"},
-    {en:"orange",pic:"🟧"},{en:"purple",pic:"🟪"},{en:"black",pic:"⬛"},{en:"white",pic:"⬜"}]},
+    {en:"red",da:"rød",pic:"🟥"},{en:"blue",da:"blå",pic:"🟦"},{en:"green",da:"grøn",pic:"🟩"},
+    {en:"yellow",da:"gul",pic:"🟨"},{en:"orange",da:"orange",pic:"🟧"},{en:"purple",da:"lilla",pic:"🟪"},
+    {en:"black",da:"sort",pic:"⬛"},{en:"white",da:"hvid",pic:"⬜"}]},
   {name:"Tal", color:"#3B7DF0", words:[
-    {en:"one",pic:"1️⃣"},{en:"two",pic:"2️⃣"},{en:"three",pic:"3️⃣"},{en:"four",pic:"4️⃣"},
-    {en:"five",pic:"5️⃣"},{en:"six",pic:"6️⃣"},{en:"seven",pic:"7️⃣"},{en:"eight",pic:"8️⃣"}]},
+    {en:"one",da:"en",pic:"1️⃣"},{en:"two",da:"to",pic:"2️⃣"},{en:"three",da:"tre",pic:"3️⃣"},
+    {en:"four",da:"fire",pic:"4️⃣"},{en:"five",da:"fem",pic:"5️⃣"},{en:"six",da:"seks",pic:"6️⃣"},
+    {en:"seven",da:"syv",pic:"7️⃣"},{en:"eight",da:"otte",pic:"8️⃣"}]},
   {name:"Dyr", color:"#8A4FE0", words:[
-    {en:"dog",pic:"🐶"},{en:"cat",pic:"🐱"},{en:"bird",pic:"🐦"},{en:"fish",pic:"🐟"},
-    {en:"horse",pic:"🐴"},{en:"cow",pic:"🐮"},{en:"duck",pic:"🦆"},{en:"bear",pic:"🐻"}]},
+    {en:"dog",da:"hund",pic:"🐶"},{en:"cat",da:"kat",pic:"🐱"},{en:"bird",da:"fugl",pic:"🐦"},
+    {en:"fish",da:"fisk",pic:"🐟"},{en:"horse",da:"hest",pic:"🐴"},{en:"cow",da:"ko",pic:"🐮"},
+    {en:"duck",da:"and",pic:"🦆"},{en:"bear",da:"bjørn",pic:"🐻"}]},
   {name:"Mad og drikke", color:"#FF4D6D", words:[
-    {en:"apple",pic:"🍎"},{en:"bread",pic:"🍞"},{en:"milk",pic:"🥛"},{en:"water",pic:"💧"},
-    {en:"cheese",pic:"🧀"},{en:"egg",pic:"🥚"},{en:"cake",pic:"🍰"},{en:"banana",pic:"🍌"}]},
+    {en:"apple",da:"æble",pic:"🍎"},{en:"bread",da:"brød",pic:"🍞"},{en:"milk",da:"mælk",pic:"🥛"},
+    {en:"water",da:"vand",pic:"💧"},{en:"cheese",da:"ost",pic:"🧀"},{en:"egg",da:"æg",pic:"🥚"},
+    {en:"cake",da:"kage",pic:"🍰"},{en:"banana",da:"banan",pic:"🍌"}]},
   {name:"Krop og tøj", color:"#FFA51F", words:[
-    {en:"hand",pic:"✋"},{en:"eye",pic:"👁️"},{en:"nose",pic:"👃"},{en:"mouth",pic:"👄"},
-    {en:"foot",pic:"🦶"},{en:"shoes",pic:"👟"},{en:"hat",pic:"🧢"},{en:"shirt",pic:"👕"}]},
+    {en:"hand",da:"hånd",pic:"✋"},{en:"eye",da:"øje",pic:"👁️"},{en:"nose",da:"næse",pic:"👃"},
+    {en:"mouth",da:"mund",pic:"👄"},{en:"foot",da:"fod",pic:"🦶"},{en:"shoes",da:"sko",pic:"👟"},
+    {en:"hat",da:"kasket",pic:"🧢"},{en:"shirt",da:"trøje",pic:"👕"}]},
   {name:"Hjemme", color:"#3FBF6F", words:[
-    {en:"house",pic:"🏠"},{en:"door",pic:"🚪"},{en:"bed",pic:"🛏️"},{en:"chair",pic:"🪑"},
-    {en:"book",pic:"📖"},{en:"key",pic:"🔑"},{en:"phone",pic:"📱"},{en:"clock",pic:"🕐"}]},
+    {en:"house",da:"hus",pic:"🏠"},{en:"door",da:"dør",pic:"🚪"},{en:"bed",da:"seng",pic:"🛏️"},
+    {en:"chair",da:"stol",pic:"🪑"},{en:"book",da:"bog",pic:"📖"},{en:"key",da:"nøgle",pic:"🔑"},
+    {en:"phone",da:"telefon",pic:"📱"},{en:"clock",da:"ur",pic:"🕐"}]},
   {name:"Udenfor", color:"#3B7DF0", words:[
-    {en:"sun",pic:"☀️"},{en:"rain",pic:"🌧️"},{en:"tree",pic:"🌳"},{en:"flower",pic:"🌸"},
-    {en:"car",pic:"🚗"},{en:"ball",pic:"⚽"},{en:"school",pic:"🏫"},{en:"moon",pic:"🌙"}]}
+    {en:"sun",da:"sol",pic:"☀️"},{en:"rain",da:"regn",pic:"🌧️"},{en:"tree",da:"træ",pic:"🌳"},
+    {en:"flower",da:"blomst",pic:"🌸"},{en:"car",da:"bil",pic:"🚗"},{en:"ball",da:"bold",pic:"⚽"},
+    {en:"school",da:"skole",pic:"🏫"},{en:"moon",da:"måne",pic:"🌙"}]}
 ];
 
 const CHEERS = ["Ja!","Flot!","Sådan!","Super!","Perfekt!","Nemlig!","Wow!","Rigtigt!"];
@@ -383,6 +400,7 @@ function drawLearn(){
   const w = L.words[li];
   $("#learnpic").textContent = w.pic;
   $("#learnword").textContent = w.en;
+  $("#learnda").textContent = w.da;
   $("#learnfill").style.width = ((li+1)/L.words.length*100)+"%";
   $("#learnnext").textContent = li === L.words.length-1 ? "Nu skal vi lege!" : "Næste";
   say(w.en);
@@ -402,7 +420,7 @@ function drawQuestion(){
   const grid = $("#tiles"); grid.innerHTML="";
   opts.forEach(o=>{
     const t = document.createElement("button");
-    t.className="tile"; t.textContent=o.pic;
+    t.className="tile"; t.innerHTML='<span class="em"></span>'; t.firstChild.textContent=o.pic;
     t.setAttribute("aria-label","Billede " + (opts.indexOf(o)+1) + " af 4");
     t.onclick = ()=>answer(t,o);
     grid.appendChild(t);
@@ -432,9 +450,7 @@ function answer(tile, opt){
     tile.classList.add("nope");
     tile.disabled = true;
     say(cur.en);
-    if(miss >= 2 || document.querySelectorAll(".tile.nope").length >= 2){
-      document.querySelectorAll(".tile").forEach(t=>{ if(t.textContent===cur.pic) t.classList.add("show"); });
-    }
+    document.querySelectorAll(".tile").forEach(t=>{ if(t.textContent===cur.pic) t.classList.add("show"); });
   }
 }
 
