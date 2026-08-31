@@ -6,12 +6,12 @@
 <title>Ordjagt</title>
 <style>
   :root{
-    --sea:#2E86AB; --sea-deep:#1B5E7E; --sea-light:#4BA3C7;
-    --paper:#F6E7C5; --paper-2:#FCF3E0; --parch-edge:#C9A063;
-    --ink:#3A2A18; --ink-soft:#7A6242; --ink-faint:#A08A68;
-    --sand:#E8C27A; --sand-dark:#C79E56; --palm:#3E8E4E; --palm-dark:#2C6B39;
-    --gold:#F2B01E; --gold-dark:#A96F06; --hull:#8A5326; --hull-dark:#5E3616;
-    --red:#C0392B; --red-soft:#F6DAD6;
+    --sea:#1BA0D6; --sea-deep:#0E77A6; --sea-light:#5FD7F0;
+    --paper:#FFEFC9; --paper-2:#FFF8E7; --parch-edge:#D9A752;
+    --ink:#3A2B1E; --ink-soft:#7A5C38; --ink-faint:#A08A68;
+    --sand:#FFD87A; --sand-dark:#F0AE3F; --palm:#3FBF5B; --palm-dark:#249445;
+    --gold:#FFC61A; --gold-dark:#D18B00; --hull:#B06B2E; --hull-dark:#7A431A;
+    --red:#FF4D4D; --red-soft:#FFE1E1;
     --display:"Bookman Old Style",Georgia,"Times New Roman",serif;
     --body:system-ui,-apple-system,"Segoe UI",sans-serif;
     --lvl:var(--sea-deep);
@@ -20,7 +20,7 @@
   body{
     margin:0;background:var(--sea);color:var(--ink);font-family:var(--body);
     font-weight:600;overflow-x:hidden;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80'><g fill='none' stroke='%23ffffff' stroke-opacity='0.13' stroke-width='2.5' stroke-linecap='round'><path d='M8 20 q9 -7 18 0 q9 7 18 0'/><path d='M68 54 q9 -7 18 0 q9 7 18 0'/></g></svg>");
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80'><g fill='none' stroke='%23ffffff' stroke-opacity='0.22' stroke-width='3' stroke-linecap='round'><path d='M8 20 q9 -7 18 0 q9 7 18 0'/><path d='M68 54 q9 -7 18 0 q9 7 18 0'/></g></svg>");
   }
   .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
   .screen{display:none;flex:1;flex-direction:column;padding:14px 16px 26px}
@@ -29,7 +29,7 @@
 
   /* ---------- søkortet ---------- */
   .banner{
-    background:var(--paper);border:3px solid var(--parch-edge);border-radius:10px;
+    background:var(--paper);border:4px solid #3A2B1E;border-radius:12px;
     padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
     box-shadow:0 3px 0 rgba(0,0,0,.18);
   }
@@ -42,7 +42,7 @@
     text-shadow:0 1px 2px rgba(0,0,0,.35)}
 
   .chart{position:relative;display:flex;flex-direction:column;gap:2px;padding-bottom:20px}
-  .row{display:flex;align-items:center;gap:12px;padding:2px 0}
+  .row{display:flex;align-items:center;gap:9px;padding:2px 0}
   .row.r{flex-direction:row-reverse}
   .trail{height:56px;position:relative;display:flex;align-items:center;justify-content:center}
   .dots{display:flex;gap:8px;align-items:center}
@@ -55,7 +55,7 @@
   .trail.dim .deco{opacity:.55}
 
   .isle{
-    width:122px;height:106px;flex:0 0 122px;border:none;background:none;padding:0;cursor:pointer;
+    width:138px;height:120px;flex:0 0 138px;border:none;background:none;padding:0;cursor:pointer;
     position:relative;transition:transform .15s ease;
   }
   .isle svg{width:100%;height:100%;display:block;overflow:visible}
@@ -63,16 +63,16 @@
   .isle:focus-visible{outline:4px solid #fff;outline-offset:2px;border-radius:12px}
   .isle.locked{cursor:default}
   .isle.locked svg{opacity:.72}
-  .isle .num{font-family:var(--display);font-size:17px;font-weight:700;fill:var(--ink)}
+  .isle .num{font-family:var(--display);font-size:18px;font-weight:700;fill:#3A2B1E}
 
   .meta{display:flex;flex-direction:column;gap:5px;min-width:0}
-  .meta .name{font-family:var(--display);font-size:20px;font-weight:700;line-height:1.15;color:#fff;
+  .meta .name{font-family:var(--display);font-size:18px;font-weight:700;line-height:1.15;color:#fff;
     text-shadow:0 1px 3px rgba(0,0,0,.45)}
   .meta .coins{display:flex;gap:4px}
   .meta .coins svg{width:21px;height:21px}
   .meta .hint{font-size:13px;color:#CDE6F2;font-weight:700}
 
-  .ship{position:absolute;width:56px;height:56px;pointer-events:none;z-index:5;
+  .ship{position:absolute;width:64px;height:64px;pointer-events:none;z-index:5;
     transition:transform 1.7s cubic-bezier(.45,.05,.3,1)}
   .ship svg{width:100%;height:100%;display:block}
   .ship.bob{animation:bob 2.4s ease-in-out infinite}
@@ -80,26 +80,27 @@
 
   /* ---------- fælles bjælke inde på en ø ---------- */
   .bar{display:flex;align-items:center;gap:12px;padding:2px 0 16px}
-  .back{width:46px;height:46px;flex:0 0 46px;border-radius:12px;border:3px solid var(--parch-edge);
+  .back{width:46px;height:46px;flex:0 0 46px;border-radius:12px;border:4px solid #3A2B1E;
     background:var(--paper);cursor:pointer;display:grid;place-items:center;color:var(--ink);
     box-shadow:0 3px 0 rgba(0,0,0,.18)}
   .back:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
   .back:focus-visible{outline:3px solid #fff;outline-offset:2px}
-  .track{flex:1;height:16px;border-radius:999px;background:rgba(0,0,0,.22);
-    border:2px solid rgba(255,255,255,.35);overflow:hidden}
+  .track{flex:1;height:18px;border-radius:999px;background:rgba(0,0,0,.25);
+    border:3px solid #3A2B1E;overflow:hidden}
   .fill{height:100%;width:0;background:var(--gold);transition:width .35s cubic-bezier(.2,.8,.3,1)}
 
   /* ---------- lær-kort ---------- */
   .stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;text-align:center}
   .scroll{
-    background:var(--paper-2);border:5px solid var(--parch-edge);border-radius:18px;
+    background:var(--paper-2);border:5px solid #3A2B1E;border-radius:18px;
     padding:30px 22px 26px;display:flex;flex-direction:column;align-items:center;gap:12px;
     cursor:pointer;position:relative;
-    box-shadow:0 5px 0 rgba(0,0,0,.2), inset 0 0 0 3px var(--paper-2), inset 0 0 0 6px #E0C48F;
+    box-shadow:0 6px 0 rgba(58,43,30,.35), inset 0 0 0 3px var(--paper-2), inset 0 0 0 6px #EBC978;
   }
   .scroll::before,.scroll::after{
     content:"";position:absolute;left:14px;right:14px;height:8px;border-radius:4px;
-    background:repeating-linear-gradient(115deg,#C9A063 0 7px,#E0C48F 7px 14px);
+    background:repeating-linear-gradient(115deg,#B0762A 0 7px,#E8B863 7px 14px);
+    border:2.5px solid #3A2B1E;
   }
   .scroll::before{top:-5px}
   .scroll::after{bottom:-5px}
@@ -112,7 +113,7 @@
   .plank{
     width:100%;border:none;border-radius:14px;background:var(--hull);color:#FFF6E5;cursor:pointer;
     font-family:var(--display);font-size:23px;font-weight:700;padding:16px 20px;
-    border-bottom:5px solid var(--hull-dark);
+    border:4px solid #3A2B1E;border-bottom-width:8px;
   }
   .plank:active{transform:translateY(3px);border-bottom-width:2px}
   .plank:focus-visible{outline:4px solid #fff;outline-offset:3px}
@@ -124,8 +125,8 @@
   .ask h2{font-size:19px;color:#EAF6FC;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.35)}
   .earbtn{
     margin:14px auto 20px;width:128px;height:128px;border-radius:50%;cursor:pointer;
-    background:var(--gold);color:#4A3000;display:grid;place-items:center;
-    border:none;border-bottom:7px solid var(--gold-dark);
+    background:var(--gold);color:#3A2B1E;display:grid;place-items:center;
+    border:4px solid #3A2B1E;border-bottom-width:10px;
   }
   .earbtn svg{width:56px;height:56px}
   .earbtn:active{transform:translateY(4px);border-bottom-width:3px}
@@ -134,21 +135,21 @@
   @keyframes ping{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .crate{
-    background:repeating-linear-gradient(180deg,#FCF3E0 0 26px,#F3E5C8 26px 29px);
-    border:5px solid var(--hull);border-radius:12px;cursor:pointer;
+    background:repeating-linear-gradient(180deg,#FFF8E7 0 26px,#F7E7BF 26px 29px);
+    border:5px solid #3A2B1E;border-radius:12px;cursor:pointer;
     aspect-ratio:1/1;display:grid;place-items:center;font-size:60px;line-height:1;position:relative;
     box-shadow:0 4px 0 rgba(0,0,0,.2);transition:transform .12s ease,border-color .12s ease,background .12s ease;
   }
   .crate:active{transform:translateY(3px)}
   .crate:focus-visible{outline:4px solid #fff;outline-offset:3px}
-  .crate.yes{background:#D8F0C6;border-color:var(--palm);background-image:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+  .crate.yes{background:#B6EFA0;border-color:#3A2B1E;background-image:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
   @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1.06)}}
-  .crate.nope{background:var(--red-soft);background-image:none;border-color:var(--red);cursor:default;animation:wob .5s ease}
+  .crate.nope{background:var(--red-soft);background-image:none;border-color:#C42B2B;cursor:default;animation:wob .5s ease}
   .crate.nope .em{filter:grayscale(1);opacity:.32}
   .crate.nope::after{content:"✕";position:absolute;top:0;right:11px;font-family:var(--body);
     font-size:30px;font-weight:800;color:var(--red)}
   @keyframes wob{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
-  .crate.show{border-color:var(--palm);animation:beat 1s ease-in-out infinite}
+  .crate.show{border-color:#249445;animation:beat 1s ease-in-out infinite}
   @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
   /* ---------- fejring og skattekiste ---------- */
@@ -297,154 +298,208 @@ function store(){ try{ localStorage.setItem(KEY, JSON.stringify(save)); }catch(e
 const $ = s => document.querySelector(s);
 const live = $("#live");
 
+const OL = 'stroke="#3A2B1E" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+const OLt= 'stroke="#3A2B1E" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
+const C = {
+  sand:"#FFD87A", sandD:"#F0AE3F", grass:"#4ED166", grassD:"#2AA347",
+  wood:"#B06B2E", woodD:"#7A431A", rock:"#93A6B5", rockD:"#5F7385",
+  gold:"#FFC61A", goldD:"#D18B00", red:"#FF4D4D", redD:"#C42B2B",
+  cream:"#FFF6E5", lagoon:"#5FD7F0", foam:"#C8F3FC",
+  leaf:"#3FBF5B", leafD:"#249445", pink:"#FF6FA5", blue:"#4FA8FF",
+  whale:"#5E86B8", whaleD:"#3C5F8A", shade:"rgba(58,43,30,.14)"
+};
+const HI = '<ellipse cx="0" cy="0" rx="0" ry="0" fill="#fff" opacity=".35"/>';
+
 function coin(on){
-  const face = on ? "#F5B921" : "rgba(255,255,255,.28)";
-  const edge = on ? "#A96F06" : "rgba(255,255,255,.4)";
+  if(!on) return '<svg viewBox="0 0 24 24" aria-hidden="true">'+
+    '<circle cx="12" cy="12" r="9.5" fill="rgba(255,255,255,.22)" stroke="rgba(255,255,255,.5)" stroke-width="2"/></svg>';
   return '<svg viewBox="0 0 24 24" aria-hidden="true">'+
-    '<circle cx="12" cy="12" r="10" fill="'+face+'" stroke="'+edge+'" stroke-width="2"/>'+
-    '<circle cx="12" cy="12" r="5.6" fill="none" stroke="'+edge+'" stroke-width="1.6"/></svg>';
+    '<circle cx="12" cy="12" r="9.5" fill="'+C.gold+'" '+OLt+'/>'+
+    '<circle cx="12" cy="12" r="5.4" fill="none" stroke="'+C.goldD+'" stroke-width="1.8"/>'+
+    '<ellipse cx="9" cy="8.4" rx="2.6" ry="1.6" fill="#fff" opacity=".55" transform="rotate(-30 9 8.4)"/></svg>';
 }
 
-/* ---- alt herunder er tegnet fra bunden som kode, intet hentet eller kalkeret ---- */
-const C = {
-  sand:"#F2D399", sandD:"#D2A257", grass:"#4CB06A", grassD:"#2E7D4B",
-  wood:"#8A5326", woodD:"#5A3315", rock:"#7C8A97", rockD:"#515E69",
-  gold:"#F5B921", goldD:"#A96F06", red:"#C0392B", cream:"#FFF6E5",
-  lagoon:"#7FD3E2", foam:"#D9F3F8", leaf:"#3E9E58", leafD:"#26713E",
-  whale:"#4A6B8A", whaleD:"#33506B", pink:"#E8788F"
-};
-function palm(x,y,f){
-  const k = f || 1;
-  return '<g transform="translate('+x+','+y+') scale('+k+')">'+
-    '<path d="M0 0 q-3 -13 2 -22" stroke="'+C.wood+'" stroke-width="5" fill="none" stroke-linecap="round"/>'+
-    '<ellipse cx="-11" cy="-24" rx="12" ry="5.5" fill="'+C.leaf+'" transform="rotate(-20 -11 -24)"/>'+
-    '<ellipse cx="14" cy="-23" rx="12" ry="5.5" fill="'+C.leafD+'" transform="rotate(20 14 -23)"/>'+
-    '<ellipse cx="1" cy="-30" rx="11" ry="5" fill="'+C.leaf+'"/>'+
-    '<circle cx="2" cy="-21" r="3" fill="'+C.woodD+'"/></g>';
+function palm(x,y,k,flip){
+  return '<g transform="translate('+x+','+y+') scale('+(flip?-k:k)+','+k+')">'+
+    '<path d="M0 0 q-4 -14 3 -25" fill="none" stroke="'+C.woodD+'" stroke-width="7" stroke-linecap="round"/>'+
+    '<path d="M0 0 q-4 -14 3 -25" fill="none" stroke="'+C.wood+'" stroke-width="4" stroke-linecap="round"/>'+
+    '<path d="M3 -25 q-12 -9 -20 -4 q9 -2 19 3 z" fill="'+C.leaf+'" '+OLt+'/>'+
+    '<path d="M3 -25 q13 -10 21 -4 q-10 -2 -20 4 z" fill="'+C.leafD+'" '+OLt+'/>'+
+    '<path d="M3 -25 q-9 -13 -3 -19 q4 8 5 18 z" fill="'+C.leaf+'" '+OLt+'/>'+
+    '<path d="M3 -25 q10 -12 16 -9 q-9 2 -14 10 z" fill="'+C.leafD+'" '+OLt+'/>'+
+    '<circle cx="-1" cy="-21" r="3" fill="'+C.woodD+'" '+OLt+'/>'+
+    '<circle cx="6" cy="-20" r="2.6" fill="'+C.woodD+'" '+OLt+'/></g>';
 }
+function rock(x,y,k){
+  return '<g transform="translate('+x+','+y+') scale('+k+')">'+
+    '<path d="M-13 0 q1 -11 8 -12 q4 -6 10 -1 q8 1 8 13 z" fill="'+C.rock+'" '+OLt+'/>'+
+    '<path d="M-6 -9 q4 -3 8 0" fill="none" stroke="'+C.rockD+'" stroke-width="2"/></g>';
+}
+
 const LAND = {
-  palm: ()=> palm(64,50,1.15) + palm(40,54,.8),
+  palm: ()=> rock(96,66,.7) + palm(38,60,1,true) + palm(70,54,1.25) +
+    '<path d="M52 66 l4 -5 l4 5 l5 1 l-5 3 l-2 5 l-3 -5 l-6 -1 z" fill="'+C.red+'" '+OLt+'/>',
   huts: ()=>
-    '<g><path d="M30 52 l14 -18 l14 18 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<rect x="36" y="50" width="16" height="10" fill="'+C.sandD+'"/>'+
-    '<path d="M62 52 l16 -21 l16 21 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<rect x="69" y="50" width="18" height="10" fill="'+C.sandD+'"/>'+
-    '<rect x="75" y="53" width="7" height="7" fill="'+C.woodD+'"/></g>',
+    '<g><path d="M24 56 l16 -21 l16 21 z" fill="'+C.gold+'" '+OL+'/>'+
+    '<path d="M30 50 h20 M27 54 h26" stroke="'+C.goldD+'" stroke-width="2"/>'+
+    '<rect x="30" y="55" width="20" height="12" fill="'+C.wood+'" '+OLt+'/>'+
+    '<rect x="36" y="59" width="8" height="8" fill="'+C.woodD+'"/>'+
+    '<path d="M58 58 l19 -25 l19 25 z" fill="'+C.gold+'" '+OL+'/>'+
+    '<path d="M65 51 h24 M62 55 h30" stroke="'+C.goldD+'" stroke-width="2"/>'+
+    '<rect x="65" y="57" width="24" height="13" fill="'+C.wood+'" '+OLt+'/>'+
+    '<rect x="73" y="61" width="9" height="9" fill="'+C.woodD+'"/>'+
+    '<path d="M77 33 v-8 l9 3 l-9 3" fill="'+C.red+'" '+OLt+'/></g>',
   parrot: ()=>
-    '<g>'+ palm(34,54,.75) +
-    '<ellipse cx="72" cy="40" rx="12" ry="15" fill="'+C.red+'"/>'+
-    '<ellipse cx="66" cy="41" rx="6" ry="10" fill="'+C.gold+'"/>'+
-    '<circle cx="74" cy="27" r="8" fill="'+C.red+'"/>'+
-    '<circle cx="77" cy="25" r="2.2" fill="#2B2B2B"/>'+
-    '<path d="M82 27 l7 4 l-7 4 z" fill="'+C.gold+'"/>'+
-    '<path d="M72 54 q10 6 14 -2" stroke="'+C.leafD+'" stroke-width="4" fill="none" stroke-linecap="round"/></g>',
+    '<g>'+ palm(30,62,.85,true) +
+    '<path d="M72 70 q-4 -8 2 -12" fill="none" stroke="'+C.woodD+'" stroke-width="4" stroke-linecap="round"/>'+
+    '<path d="M84 44 q10 12 2 22 q-8 8 -14 -2 z" fill="'+C.blue+'" '+OLt+'/>'+
+    '<ellipse cx="74" cy="45" rx="13" ry="16" fill="'+C.red+'" '+OL+'/>'+
+    '<path d="M70 38 q10 4 8 18 q-8 4 -12 -4 z" fill="'+C.gold+'" '+OLt+'/>'+
+    '<circle cx="76" cy="27" r="9.5" fill="'+C.red+'" '+OL+'/>'+
+    '<circle cx="79" cy="25" r="3" fill="#fff" '+OLt+'/><circle cx="80" cy="25" r="1.5" fill="#3A2B1E"/>'+
+    '<path d="M85 25 q8 3 0 8 q-4 -3 -3 -8 z" fill="'+C.gold+'" '+OLt+'/></g>',
   arch: ()=>
-    '<g><path d="M30 56 v-14 a24 24 0 0 1 48 0 v14 h-13 v-14 a11 11 0 0 0 -22 0 v14 z" '+
-    'fill="'+C.rock+'" stroke="'+C.rockD+'" stroke-width="2.5"/>'+
-    '<circle cx="88" cy="50" r="7" fill="'+C.rock+'" stroke="'+C.rockD+'" stroke-width="2.5"/></g>',
+    '<g><path d="M26 60 v-16 a26 26 0 0 1 52 0 v16 h-15 v-16 a11 11 0 0 0 -22 0 v16 z" fill="'+C.rock+'" '+OL+'/>'+
+    '<path d="M36 34 q6 -4 12 -1 M62 40 q4 4 4 9" fill="none" stroke="'+C.rockD+'" stroke-width="2.5"/>'+
+    '<path d="M46 22 q6 -6 14 -2" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'+
+    rock(92,62,.8) + '</g>',
   jungle: ()=>
-    '<g><circle cx="40" cy="46" r="13" fill="'+C.leafD+'"/><circle cx="56" cy="41" r="15" fill="'+C.leaf+'"/>'+
-    '<circle cx="72" cy="47" r="12" fill="'+C.leafD+'"/>'+
-    '<ellipse cx="88" cy="62" rx="9" ry="6" fill="'+C.red+'"/>'+
-    '<path d="M80 60 l-5 -4 M96 60 l5 -4" stroke="'+C.red+'" stroke-width="3" stroke-linecap="round"/>'+
-    '<circle cx="85" cy="59" r="1.8" fill="#2B2B2B"/><circle cx="91" cy="59" r="1.8" fill="#2B2B2B"/></g>',
+    '<g><circle cx="38" cy="46" r="14" fill="'+C.leafD+'" '+OL+'/>'+
+    '<circle cx="57" cy="40" r="17" fill="'+C.leaf+'" '+OL+'/>'+
+    '<circle cx="76" cy="47" r="13" fill="'+C.leafD+'" '+OL+'/>'+
+    '<path d="M50 34 q7 -4 13 1" fill="none" stroke="#fff" stroke-width="3" opacity=".5" stroke-linecap="round"/>'+
+    '<ellipse cx="88" cy="65" rx="11" ry="7.5" fill="'+C.red+'" '+OL+'/>'+
+    '<path d="M79 62 q-7 -2 -9 -7 M97 62 q7 -2 9 -7" fill="none" stroke="'+C.red+'" stroke-width="4" stroke-linecap="round"/>'+
+    '<circle cx="84" cy="62" r="2.6" fill="#fff" '+OLt+'/><circle cx="92" cy="62" r="2.6" fill="#fff" '+OLt+'/>'+
+    '<circle cx="84.5" cy="62" r="1.2" fill="#3A2B1E"/><circle cx="92.5" cy="62" r="1.2" fill="#3A2B1E"/></g>',
   fruit: ()=>
-    '<g><path d="M60 56 v-16" stroke="'+C.wood+'" stroke-width="6" stroke-linecap="round"/>'+
-    '<circle cx="60" cy="32" r="19" fill="'+C.leaf+'"/><circle cx="45" cy="38" r="11" fill="'+C.leafD+'"/>'+
-    '<circle cx="75" cy="37" r="11" fill="'+C.leafD+'"/>'+
-    '<circle cx="53" cy="30" r="4" fill="'+C.red+'"/><circle cx="68" cy="34" r="4" fill="'+C.red+'"/>'+
-    '<circle cx="61" cy="43" r="4" fill="'+C.red+'"/></g>',
+    '<g><path d="M60 60 v-18" stroke="'+C.woodD+'" stroke-width="8" stroke-linecap="round"/>'+
+    '<circle cx="60" cy="30" r="21" fill="'+C.leaf+'" '+OL+'/>'+
+    '<circle cx="42" cy="38" r="12" fill="'+C.leafD+'" '+OL+'/>'+
+    '<circle cx="78" cy="37" r="12" fill="'+C.leafD+'" '+OL+'/>'+
+    '<path d="M50 22 q9 -5 18 1" fill="none" stroke="#fff" stroke-width="3.5" opacity=".5" stroke-linecap="round"/>'+
+    '<circle cx="50" cy="32" r="5" fill="'+C.red+'" '+OLt+'/>'+
+    '<circle cx="70" cy="36" r="5" fill="'+C.red+'" '+OLt+'/>'+
+    '<circle cx="61" cy="45" r="5" fill="'+C.gold+'" '+OLt+'/>'+
+    rock(96,64,.6)+'</g>',
   wreck: ()=>
-    '<g transform="rotate(-13 60 48)">'+
-    '<path d="M34 56 h52 l-9 14 h-34 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<path d="M60 56 v-30" stroke="'+C.woodD+'" stroke-width="5" stroke-linecap="round"/>'+
-    '<path d="M62 28 q15 8 0 15 z" fill="'+C.cream+'" stroke="'+C.sandD+'" stroke-width="2"/>'+
-    '<path d="M34 56 q26 8 52 0" stroke="'+C.cream+'" stroke-width="3" fill="none"/></g>',
+    '<g transform="rotate(-14 60 50)">'+
+    '<path d="M30 54 h58 l-10 17 h-38 z" fill="'+C.wood+'" '+OL+'/>'+
+    '<path d="M33 61 h52 M36 67 h46" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<path d="M60 54 v-32" stroke="'+C.woodD+'" stroke-width="6" stroke-linecap="round"/>'+
+    '<path d="M63 24 q19 10 1 19 l-1 -19 z" fill="'+C.cream+'" '+OL+'/>'+
+    '<path d="M63 33 l6 5 l-6 3" fill="'+C.cream+'" '+OLt+'/>'+
+    '<circle cx="46" cy="63" r="4" fill="'+C.woodD+'"/>'+
+    '<path d="M60 22 h11 l-3 4 l3 4 h-11" fill="'+C.redD+'" '+OLt+'/></g>',
   lighthouse: ()=>
-    '<g><path d="M50 58 l4 -30 h12 l4 30 z" fill="'+C.cream+'" stroke="'+C.rockD+'" stroke-width="2.5"/>'+
-    '<path d="M52 46 h16 M53 37 h14" stroke="'+C.red+'" stroke-width="5"/>'+
-    '<rect x="52" y="20" width="16" height="9" rx="2" fill="'+C.gold+'" stroke="'+C.woodD+'" stroke-width="2"/>'+
-    '<path d="M46 16 h-9 M74 16 h9" stroke="'+C.gold+'" stroke-width="3" stroke-linecap="round"/>'+
-    '<path d="M78 58 l7 -12 l7 12 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2"/></g>',
+    '<g><path d="M48 62 l5 -34 h14 l5 34 z" fill="'+C.cream+'" '+OL+'/>'+
+    '<path d="M50.5 51 h19" stroke="'+C.red+'" stroke-width="6"/>'+
+    '<path d="M52 41 h16" stroke="'+C.red+'" stroke-width="6"/>'+
+    '<rect x="51" y="18" width="18" height="11" rx="2" fill="'+C.gold+'" '+OL+'/>'+
+    '<path d="M49 18 h22" stroke="#3A2B1E" stroke-width="3" stroke-linecap="round"/>'+
+    '<path d="M60 8 l-5 8 h10 z" fill="'+C.red+'" '+OLt+'/>'+
+    '<path d="M44 20 l-12 -4 M76 20 l12 -4 M44 27 l-13 3 M76 27 l13 3" stroke="'+C.gold+'" stroke-width="3.5" stroke-linecap="round"/>'+
+    rock(30,64,.75)+'</g>',
   volcano: ()=>
-    '<g><path d="M28 58 l24 -34 h16 l24 34 z" fill="'+C.rockD+'"/>'+
-    '<path d="M28 58 l24 -34 h6 l-12 34 z" fill="'+C.rock+'"/>'+
-    '<path d="M50 26 q10 8 20 0 q-2 10 -10 10 q-8 0 -10 -10 z" fill="'+C.red+'"/>'+
-    '<circle cx="52" cy="12" r="7" fill="#C9D6DE"/><circle cx="66" cy="8" r="9" fill="#DDE7ED"/>'+
-    '<circle cx="78" cy="14" r="6" fill="#C9D6DE"/></g>'
+    '<g><path d="M24 60 l24 -36 h24 l24 36 z" fill="'+C.rockD+'" '+OL+'/>'+
+    '<path d="M24 60 l24 -36 h7 l-14 36 z" fill="'+C.rock+'"/>'+
+    '<path d="M46 25 q14 7 28 0 q-3 12 -14 12 q-11 0 -14 -12 z" fill="'+C.red+'" '+OLt+'/>'+
+    '<path d="M50 30 q6 14 -2 22 M70 30 q-3 12 4 20" fill="none" stroke="'+C.red+'" stroke-width="4" stroke-linecap="round"/>'+
+    '<circle cx="48" cy="12" r="8" fill="#D7E4EC" '+OLt+'/>'+
+    '<circle cx="63" cy="6" r="10" fill="#EDF4F8" '+OLt+'/>'+
+    '<circle cx="78" cy="13" r="7" fill="#D7E4EC" '+OLt+'/></g>'
 };
 const KINDS = ["palm","huts","parrot","arch","jungle","fruit","wreck","lighthouse","volcano"];
 
 function island(lv, n, open, kind){
-  const art = open ? (LAND[kind] ? LAND[kind]() : LAND.palm()) : '';
+  const land = open ? (LAND[kind] ? LAND[kind]() : LAND.palm()) : '';
   const fog = open ? '' :
-    '<g fill="#CFE3EC" opacity=".92"><circle cx="40" cy="40" r="16"/><circle cx="62" cy="32" r="20"/>'+
-    '<circle cx="84" cy="41" r="15"/><rect x="26" y="38" width="72" height="20" rx="10"/></g>';
+    '<g fill="#E4F2F8" '+OL+'><circle cx="38" cy="42" r="17"/><circle cx="62" cy="33" r="21"/>'+
+    '<circle cx="86" cy="43" r="16"/><rect x="24" y="40" width="76" height="22" rx="11"/></g>';
   return '<svg viewBox="0 0 120 104" aria-hidden="true">'+
-    '<ellipse cx="60" cy="80" rx="57" ry="17" fill="'+C.lagoon+'" opacity=".85"/>'+
-    '<ellipse cx="60" cy="79" rx="50" ry="13" fill="'+C.foam+'" opacity=".9"/>'+
-    '<path d="M12 74 q10 -28 48 -28 q38 0 48 28 z" fill="'+C.sand+'" stroke="'+C.sandD+'" stroke-width="3"/>'+
-    '<path d="M26 62 q34 -14 68 0" stroke="'+C.grass+'" stroke-width="7" fill="none" stroke-linecap="round" opacity="'+(open?.85:0)+'"/>'+
-    art + fog +
-    '<circle cx="24" cy="70" r="13" fill="'+C.cream+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<text class="num" x="24" y="76" text-anchor="middle">'+n+'</text></svg>';
+    '<ellipse cx="60" cy="82" rx="57" ry="17" fill="'+C.lagoon+'" '+OL+'/>'+
+    '<ellipse cx="60" cy="80" rx="47" ry="12" fill="'+C.foam+'"/>'+
+    '<path d="M10 76 q10 -30 50 -30 q40 0 50 30 z" fill="'+C.sand+'" '+OL+'/>'+
+    '<path d="M10 76 q10 -30 50 -30 q-16 14 -20 30 z" fill="#FFE7A8"/>'+
+    '<path d="M22 64 q38 -16 76 0 q-38 -8 -76 0 z" fill="'+C.grass+'" '+(open?OL:'')+' opacity="'+(open?1:0)+'"/>'+
+    land + fog +
+    '<circle cx="22" cy="72" r="14" fill="'+C.cream+'" '+OL+'/>'+
+    '<text class="num" x="22" y="78" text-anchor="middle">'+n+'</text></svg>';
 }
 
 const DECOS = [
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<path d="M8 40 q16 -18 40 -12 q18 5 22 14 q-20 10 -40 6 q-16 -3 -22 -8 z" fill="'+C.whale+'"/>'+
-    '<path d="M8 40 q-6 -10 -4 -16 q10 4 12 12 z" fill="'+C.whaleD+'"/>'+
-    '<path d="M20 44 q18 8 38 2" stroke="'+C.foam+'" stroke-width="3" fill="none"/>'+
-    '<circle cx="60" cy="32" r="2.4" fill="#2B2B2B"/>'+
-    '<path d="M54 16 q4 -10 10 -12 M64 18 q8 -8 14 -8" stroke="'+C.foam+'" stroke-width="3.5" fill="none" stroke-linecap="round"/></g></svg>',
+    '<path d="M6 40 q16 -20 42 -13 q19 5 24 15 q-22 11 -43 7 q-17 -3 -23 -9 z" fill="'+C.whale+'" '+OL+'/>'+
+    '<path d="M14 44 q20 9 43 4 q-19 8 -37 3 z" fill="'+C.foam+'"/>'+
+    '<path d="M6 40 q-7 -12 -5 -19 q12 5 14 15 z" fill="'+C.whaleD+'" '+OL+'/>'+
+    '<circle cx="61" cy="31" r="3.4" fill="#fff" '+OLt+'/><circle cx="62" cy="31" r="1.6" fill="#3A2B1E"/>'+
+    '<path d="M55 15 q3 -11 9 -13 M65 17 q9 -9 15 -9" fill="none" stroke="'+C.foam+'" stroke-width="4" stroke-linecap="round"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<path d="M10 46 q22 -34 56 -22 q10 4 14 12 q-22 -6 -34 4 q-16 12 -36 6 z" fill="#5FA8C9"/>'+
-    '<path d="M40 26 q6 -12 16 -12 q-4 10 -8 14 z" fill="#4A8FB0"/>'+
-    '<circle cx="70" cy="34" r="2.2" fill="#2B2B2B"/></g></svg>',
+    '<path d="M8 46 q22 -36 58 -23 q11 4 15 13 q-24 -7 -37 4 q-17 13 -36 6 z" fill="#59B4DC" '+OL+'/>'+
+    '<path d="M20 44 q20 4 34 -6 q-14 14 -34 6 z" fill="'+C.foam+'"/>'+
+    '<path d="M38 26 q7 -14 18 -13 q-5 11 -9 15 z" fill="#3F94BD" '+OLt+'/>'+
+    '<circle cx="71" cy="33" r="3" fill="#fff" '+OLt+'/><circle cx="72" cy="33" r="1.4" fill="#3A2B1E"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<circle cx="44" cy="26" r="16" fill="'+C.pink+'"/>'+
-    '<circle cx="38" cy="24" r="2.6" fill="#2B2B2B"/><circle cx="51" cy="24" r="2.6" fill="#2B2B2B"/>'+
-    '<path d="M30 38 q-4 14 -10 18 M38 41 q-3 14 -8 19 M48 41 q3 14 8 19 M57 38 q5 14 11 18" '+
-    'stroke="'+C.pink+'" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg>',
+    '<circle cx="45" cy="25" r="17" fill="'+C.pink+'" '+OL+'/>'+
+    '<circle cx="38" cy="23" r="3.6" fill="#fff" '+OLt+'/><circle cx="39" cy="23" r="1.7" fill="#3A2B1E"/>'+
+    '<circle cx="52" cy="23" r="3.6" fill="#fff" '+OLt+'/><circle cx="53" cy="23" r="1.7" fill="#3A2B1E"/>'+
+    '<path d="M45 31 q4 4 8 1" fill="none" stroke="#3A2B1E" stroke-width="2.2" stroke-linecap="round"/>'+
+    '<path d="M30 38 q-6 14 -12 18 M38 42 q-4 14 -9 18 M52 42 q4 14 9 18 M60 38 q6 14 12 18" '+
+    'fill="none" stroke="'+C.pink+'" stroke-width="6" stroke-linecap="round"/>'+
+    '<path d="M30 38 q-6 14 -12 18 M38 42 q-4 14 -9 18 M52 42 q4 14 9 18 M60 38 q6 14 12 18" '+
+    'fill="none" stroke="#3A2B1E" stroke-width="9" stroke-linecap="round" opacity=".0"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<path d="M44 12 l14 30 h-28 z" fill="#6E8A9C"/>'+
-    '<path d="M10 46 q18 -7 34 0 q18 7 36 0" stroke="'+C.foam+'" stroke-width="4" fill="none" stroke-linecap="round"/></g></svg>',
+    '<path d="M44 10 l15 32 h-30 z" fill="'+C.rock+'" '+OL+'/>'+
+    '<path d="M44 16 l9 22 h-9 z" fill="'+C.rockD+'"/>'+
+    '<path d="M8 46 q18 -8 36 0 q18 8 38 0" fill="none" stroke="'+C.foam+'" stroke-width="5" stroke-linecap="round"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<rect x="30" y="14" width="30" height="34" rx="9" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<rect x="27" y="22" width="36" height="5" fill="'+C.goldD+'"/><rect x="27" y="36" width="36" height="5" fill="'+C.goldD+'"/></g></svg>',
-  ()=> '<svg viewBox="0 0 90 60"><g fill="none" stroke="'+C.cream+'" stroke-width="3.5" stroke-linecap="round">'+
-    '<path d="M14 24 q8 -8 16 0 q8 8 16 0"/><path d="M50 38 q8 -8 16 0 q8 8 16 0"/></g></svg>',
+    '<rect x="30" y="12" width="30" height="36" rx="10" fill="'+C.wood+'" '+OL+'/>'+
+    '<rect x="26" y="20" width="38" height="6" rx="2" fill="'+C.rockD+'" '+OLt+'/>'+
+    '<rect x="26" y="35" width="38" height="6" rx="2" fill="'+C.rockD+'" '+OLt+'/>'+
+    '<path d="M38 14 v33 M52 14 v33" stroke="'+C.woodD+'" stroke-width="2.5"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<circle cx="45" cy="30" r="22" fill="'+C.cream+'" opacity=".92" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<path d="M45 10 l5 18 l-5 4 l-5 -4 z" fill="'+C.red+'"/>'+
-    '<path d="M45 50 l5 -18 l-5 -4 l-5 4 z" fill="'+C.woodD+'"/>'+
-    '<path d="M25 30 l18 -5 l4 5 l-4 5 z" fill="'+C.woodD+'"/>'+
-    '<path d="M65 30 l-18 -5 l-4 5 l4 5 z" fill="'+C.woodD+'"/></g></svg>'
+    '<ellipse cx="45" cy="34" rx="20" ry="14" fill="'+C.leafD+'" '+OL+'/>'+
+    '<path d="M32 26 q13 -8 26 0 q-13 -3 -26 0 z" fill="'+C.leaf+'"/>'+
+    '<circle cx="66" cy="28" r="8" fill="'+C.grass+'" '+OL+'/>'+
+    '<circle cx="69" cy="26" r="2.6" fill="#fff" '+OLt+'/><circle cx="70" cy="26" r="1.3" fill="#3A2B1E"/>'+
+    '<path d="M28 44 q-7 5 -10 3 M60 46 q7 5 11 3" fill="none" stroke="'+C.leafD+'" stroke-width="5" stroke-linecap="round"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<circle cx="45" cy="30" r="23" fill="'+C.cream+'" '+OL+'/>'+
+    '<path d="M45 8 l6 20 l-6 5 l-6 -5 z" fill="'+C.red+'" '+OLt+'/>'+
+    '<path d="M45 52 l6 -20 l-6 -5 l-6 5 z" fill="'+C.rockD+'" '+OLt+'/>'+
+    '<path d="M23 30 l20 -6 l4 6 l-4 6 z" fill="'+C.rockD+'" '+OLt+'/>'+
+    '<path d="M67 30 l-20 -6 l-4 6 l4 6 z" fill="'+C.cream+'" '+OLt+'/>'+
+    '<circle cx="45" cy="30" r="3" fill="'+C.gold+'" '+OLt+'/></g></svg>'
 ];
 
 function shipSvg(){
   return '<svg viewBox="0 0 64 64" aria-hidden="true">'+
-    '<path d="M32 8 v30" stroke="#5E3616" stroke-width="4" stroke-linecap="round"/>'+
-    '<path d="M34 10 q16 8 0 17 z" fill="#FFF6E5" stroke="#C9A063" stroke-width="2"/>'+
-    '<path d="M30 12 q-13 7 0 14 z" fill="#F6E7C5" stroke="#C9A063" stroke-width="2"/>'+
-    '<path d="M12 40 h40 l-7 13 h-26 z" fill="#8A5326" stroke="#5E3616" stroke-width="2.5"/>'+
-    '<path d="M10 40 q22 8 44 0" stroke="#FFF6E5" stroke-width="3" fill="none" stroke-linecap="round"/></svg>';
+    '<path d="M32 8 v32" stroke="'+C.woodD+'" stroke-width="5" stroke-linecap="round"/>'+
+    '<path d="M35 10 q18 10 0 19 z" fill="'+C.cream+'" '+OLt+'/>'+
+    '<path d="M29 13 q-14 8 0 15 z" fill="#FFE7A8" '+OLt+'/>'+
+    '<path d="M10 40 h44 l-8 15 h-28 z" fill="'+C.wood+'" '+OL+'/>'+
+    '<path d="M13 47 h38" stroke="'+C.woodD+'" stroke-width="3"/>'+
+    '<path d="M8 40 q24 9 48 0" fill="none" stroke="'+C.foam+'" stroke-width="4" stroke-linecap="round"/>'+
+    '<path d="M32 8 h10 l-3 4 l3 4 h-10" fill="'+C.red+'" '+OLt+'/></svg>';
 }
 function chestSvg(open){
   const lid = open
-    ? '<path d="M18 40 q42 -34 84 0 l0 6 q-42 -28 -84 0 z" fill="#A96F06" stroke="#5E3616" stroke-width="3" transform="rotate(-16 20 42)"/>'
-    : '<path d="M18 46 q42 -30 84 0 z" fill="#A96F06" stroke="#5E3616" stroke-width="3"/>';
+    ? '<g transform="rotate(-20 20 44)"><path d="M16 42 q44 -36 88 0 l0 8 q-44 -30 -88 0 z" fill="'+C.woodD+'" stroke="#3A2B1E" stroke-width="3.5" stroke-linejoin="round"/></g>'
+    : '<path d="M16 48 q44 -32 88 0 z" fill="'+C.woodD+'" stroke="#3A2B1E" stroke-width="3.5"/>';
   const gold = open
-    ? '<circle cx="45" cy="52" r="9" fill="#F2B01E" stroke="#A96F06" stroke-width="2"/>'+
-      '<circle cx="63" cy="47" r="10" fill="#FFD35C" stroke="#A96F06" stroke-width="2"/>'+
-      '<circle cx="79" cy="53" r="8" fill="#F2B01E" stroke="#A96F06" stroke-width="2"/>'
+    ? '<circle cx="43" cy="52" r="10" fill="'+C.gold+'" '+OLt+'/>'+
+      '<circle cx="62" cy="46" r="11" fill="#FFD95C" '+OLt+'/>'+
+      '<circle cx="80" cy="53" r="9" fill="'+C.gold+'" '+OLt+'/>'
     : '';
   return '<g>'+ gold +
-    '<rect x="18" y="52" width="84" height="42" rx="7" fill="#8A5326" stroke="#5E3616" stroke-width="3"/>'+
-    '<rect x="14" y="62" width="92" height="9" fill="#A96F06" stroke="#5E3616" stroke-width="2.5"/>'+
-    '<rect x="53" y="66" width="14" height="17" rx="3" fill="#F2B01E" stroke="#5E3616" stroke-width="2.5"/>'+
+    '<rect x="16" y="54" width="88" height="42" rx="8" fill="'+C.wood+'" stroke="#3A2B1E" stroke-width="3.5"/>'+
+    '<path d="M30 54 v42 M60 54 v42 M90 54 v42" stroke="'+C.woodD+'" stroke-width="3"/>'+
+    '<rect x="12" y="63" width="96" height="10" rx="3" fill="'+C.goldD+'" stroke="#3A2B1E" stroke-width="3"/>'+
+    '<rect x="52" y="66" width="16" height="19" rx="3" fill="'+C.gold+'" stroke="#3A2B1E" stroke-width="3"/>'+
+    '<circle cx="60" cy="75" r="3" fill="'+C.woodD+'"/>'+
     lid + '</g>';
 }
+
 function totalCoins(){ return Object.values(save.stars).reduce((a,b)=>a+b,0); }
 function show(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
@@ -575,9 +630,9 @@ function drawMap(){
   const here = Math.min(save.open, LEVELS.length) - 1;
   const spot = el => {
     const r = el.getBoundingClientRect(), b = box.getBoundingClientRect();
-    let left = r.left - b.left + r.width/2 - 28;
-    left = Math.max(2, Math.min(left, b.width - 58));
-    return [left, r.top - b.top + r.height - 40];
+    let left = r.left - b.left + r.width/2 - 32;
+    left = Math.max(2, Math.min(left, b.width - 66));
+    return [left, r.top - b.top + r.height - 26];
   };
   const park = i => { const p = spot(isles[i]); ship.style.transform = "translate("+p[0]+"px,"+p[1]+"px)"; };
   const sail = sailFrom !== null && sailFrom !== here;
