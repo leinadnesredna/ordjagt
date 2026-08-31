@@ -44,23 +44,26 @@
   .chart{position:relative;display:flex;flex-direction:column;gap:2px;padding-bottom:20px}
   .row{display:flex;align-items:center;gap:12px;padding:2px 0}
   .row.r{flex-direction:row-reverse}
-  .trail{height:30px;display:flex;align-items:center;justify-content:center;gap:7px;padding-left:44px}
-  .row.r + .trail{padding-left:0;padding-right:44px}
-  .trail i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);display:block}
-  .trail.dim i{background:rgba(255,255,255,.22)}
+  .trail{height:56px;position:relative;display:flex;align-items:center;justify-content:center}
+  .dots{display:flex;gap:8px;align-items:center}
+  .trail i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);display:block}
+  .trail.dim i{background:rgba(255,255,255,.2)}
+  .deco{position:absolute;top:2px;width:86px;height:52px;pointer-events:none;opacity:.95}
+  .deco svg{width:100%;height:100%;display:block}
+  .deco.l{left:-4px}
+  .deco.r{right:-4px}
+  .trail.dim .deco{opacity:.55}
 
   .isle{
-    width:104px;height:92px;flex:0 0 104px;border:none;background:none;padding:0;cursor:pointer;
+    width:122px;height:106px;flex:0 0 122px;border:none;background:none;padding:0;cursor:pointer;
     position:relative;transition:transform .15s ease;
   }
   .isle svg{width:100%;height:100%;display:block;overflow:visible}
   .isle:active{transform:translateY(3px)}
   .isle:focus-visible{outline:4px solid #fff;outline-offset:2px;border-radius:12px}
   .isle.locked{cursor:default}
-  .isle.locked svg{opacity:.42;filter:grayscale(.55)}
-  .isle .num{
-    font-family:var(--display);font-size:20px;font-weight:700;fill:var(--ink);
-  }
+  .isle.locked svg{opacity:.72}
+  .isle .num{font-family:var(--display);font-size:17px;font-weight:700;fill:var(--ink)}
 
   .meta{display:flex;flex-direction:column;gap:5px;min-width:0}
   .meta .name{font-family:var(--display);font-size:20px;font-weight:700;line-height:1.15;color:#fff;
@@ -89,10 +92,17 @@
   /* ---------- lær-kort ---------- */
   .stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;text-align:center}
   .scroll{
-    background:var(--paper-2);border:4px solid var(--parch-edge);border-radius:14px;
+    background:var(--paper-2);border:5px solid var(--parch-edge);border-radius:18px;
     padding:30px 22px 26px;display:flex;flex-direction:column;align-items:center;gap:12px;
-    cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.2);
+    cursor:pointer;position:relative;
+    box-shadow:0 5px 0 rgba(0,0,0,.2), inset 0 0 0 3px var(--paper-2), inset 0 0 0 6px #E0C48F;
   }
+  .scroll::before,.scroll::after{
+    content:"";position:absolute;left:14px;right:14px;height:8px;border-radius:4px;
+    background:repeating-linear-gradient(115deg,#C9A063 0 7px,#E0C48F 7px 14px);
+  }
+  .scroll::before{top:-5px}
+  .scroll::after{bottom:-5px}
   .pic{font-size:100px;line-height:1.15;user-select:none}
   .word{font-family:var(--display);font-size:42px;font-weight:700;color:var(--hull-dark);line-height:1}
   .word-da{font-size:18px;font-weight:700;color:var(--ink-soft)}
@@ -124,15 +134,16 @@
   @keyframes ping{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .crate{
-    background:var(--paper-2);border:4px solid var(--parch-edge);border-radius:14px;cursor:pointer;
+    background:repeating-linear-gradient(180deg,#FCF3E0 0 26px,#F3E5C8 26px 29px);
+    border:5px solid var(--hull);border-radius:12px;cursor:pointer;
     aspect-ratio:1/1;display:grid;place-items:center;font-size:60px;line-height:1;position:relative;
     box-shadow:0 4px 0 rgba(0,0,0,.2);transition:transform .12s ease,border-color .12s ease,background .12s ease;
   }
   .crate:active{transform:translateY(3px)}
   .crate:focus-visible{outline:4px solid #fff;outline-offset:3px}
-  .crate.yes{background:#D8F0C6;border-color:var(--palm);animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+  .crate.yes{background:#D8F0C6;border-color:var(--palm);background-image:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
   @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1.06)}}
-  .crate.nope{background:var(--red-soft);border-color:var(--red);cursor:default;animation:wob .5s ease}
+  .crate.nope{background:var(--red-soft);background-image:none;border-color:var(--red);cursor:default;animation:wob .5s ease}
   .crate.nope .em{filter:grayscale(1);opacity:.32}
   .crate.nope::after{content:"✕";position:absolute;top:0;right:11px;font-family:var(--body);
     font-size:30px;font-weight:800;color:var(--red)}
@@ -287,30 +298,130 @@ const $ = s => document.querySelector(s);
 const live = $("#live");
 
 function coin(on){
-  const face = on ? "#F2B01E" : "rgba(255,255,255,.28)";
+  const face = on ? "#F5B921" : "rgba(255,255,255,.28)";
   const edge = on ? "#A96F06" : "rgba(255,255,255,.4)";
   return '<svg viewBox="0 0 24 24" aria-hidden="true">'+
     '<circle cx="12" cy="12" r="10" fill="'+face+'" stroke="'+edge+'" stroke-width="2"/>'+
     '<circle cx="12" cy="12" r="5.6" fill="none" stroke="'+edge+'" stroke-width="1.6"/></svg>';
 }
-function island(lv, n, state){
-  const sand = lv.sand, dark = "#C79E56";
-  let top = "";
-  if(state === "locked"){
-    top = '<path d="M52 30 v-13" stroke="#7A6242" stroke-width="4" stroke-linecap="round"/>'+
-          '<rect x="42" y="8" width="20" height="14" rx="4" fill="#8A9AA6" stroke="#5F6E79" stroke-width="2.5"/>';
-  } else {
-    top = '<path d="M53 34 q-2 -14 1 -22" stroke="#8A5326" stroke-width="6" fill="none" stroke-linecap="round"/>'+
-          '<ellipse cx="41" cy="12" rx="14" ry="7" fill="#3E8E4E" transform="rotate(-18 41 12)"/>'+
-          '<ellipse cx="68" cy="13" rx="14" ry="7" fill="#2C6B39" transform="rotate(18 68 13)"/>'+
-          '<ellipse cx="54" cy="6" rx="13" ry="6.5" fill="#3E8E4E"/>';
-  }
-  return '<svg viewBox="0 0 108 96" aria-hidden="true">'+
-    '<ellipse cx="54" cy="80" rx="49" ry="13" fill="rgba(255,255,255,.28)"/>'+
-    '<path d="M9 74 q10 -30 45 -30 q35 0 45 30 z" fill="'+sand+'" stroke="'+dark+'" stroke-width="3"/>'+
-    top +
-    '<text class="num" x="30" y="70" text-anchor="middle">'+n+'</text></svg>';
+
+/* ---- alt herunder er tegnet fra bunden som kode, intet hentet eller kalkeret ---- */
+const C = {
+  sand:"#F2D399", sandD:"#D2A257", grass:"#4CB06A", grassD:"#2E7D4B",
+  wood:"#8A5326", woodD:"#5A3315", rock:"#7C8A97", rockD:"#515E69",
+  gold:"#F5B921", goldD:"#A96F06", red:"#C0392B", cream:"#FFF6E5",
+  lagoon:"#7FD3E2", foam:"#D9F3F8", leaf:"#3E9E58", leafD:"#26713E",
+  whale:"#4A6B8A", whaleD:"#33506B", pink:"#E8788F"
+};
+function palm(x,y,f){
+  const k = f || 1;
+  return '<g transform="translate('+x+','+y+') scale('+k+')">'+
+    '<path d="M0 0 q-3 -13 2 -22" stroke="'+C.wood+'" stroke-width="5" fill="none" stroke-linecap="round"/>'+
+    '<ellipse cx="-11" cy="-24" rx="12" ry="5.5" fill="'+C.leaf+'" transform="rotate(-20 -11 -24)"/>'+
+    '<ellipse cx="14" cy="-23" rx="12" ry="5.5" fill="'+C.leafD+'" transform="rotate(20 14 -23)"/>'+
+    '<ellipse cx="1" cy="-30" rx="11" ry="5" fill="'+C.leaf+'"/>'+
+    '<circle cx="2" cy="-21" r="3" fill="'+C.woodD+'"/></g>';
 }
+const LAND = {
+  palm: ()=> palm(64,50,1.15) + palm(40,54,.8),
+  huts: ()=>
+    '<g><path d="M30 52 l14 -18 l14 18 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<rect x="36" y="50" width="16" height="10" fill="'+C.sandD+'"/>'+
+    '<path d="M62 52 l16 -21 l16 21 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<rect x="69" y="50" width="18" height="10" fill="'+C.sandD+'"/>'+
+    '<rect x="75" y="53" width="7" height="7" fill="'+C.woodD+'"/></g>',
+  parrot: ()=>
+    '<g>'+ palm(34,54,.75) +
+    '<ellipse cx="72" cy="40" rx="12" ry="15" fill="'+C.red+'"/>'+
+    '<ellipse cx="66" cy="41" rx="6" ry="10" fill="'+C.gold+'"/>'+
+    '<circle cx="74" cy="27" r="8" fill="'+C.red+'"/>'+
+    '<circle cx="77" cy="25" r="2.2" fill="#2B2B2B"/>'+
+    '<path d="M82 27 l7 4 l-7 4 z" fill="'+C.gold+'"/>'+
+    '<path d="M72 54 q10 6 14 -2" stroke="'+C.leafD+'" stroke-width="4" fill="none" stroke-linecap="round"/></g>',
+  arch: ()=>
+    '<g><path d="M30 56 v-14 a24 24 0 0 1 48 0 v14 h-13 v-14 a11 11 0 0 0 -22 0 v14 z" '+
+    'fill="'+C.rock+'" stroke="'+C.rockD+'" stroke-width="2.5"/>'+
+    '<circle cx="88" cy="50" r="7" fill="'+C.rock+'" stroke="'+C.rockD+'" stroke-width="2.5"/></g>',
+  jungle: ()=>
+    '<g><circle cx="40" cy="46" r="13" fill="'+C.leafD+'"/><circle cx="56" cy="41" r="15" fill="'+C.leaf+'"/>'+
+    '<circle cx="72" cy="47" r="12" fill="'+C.leafD+'"/>'+
+    '<ellipse cx="88" cy="62" rx="9" ry="6" fill="'+C.red+'"/>'+
+    '<path d="M80 60 l-5 -4 M96 60 l5 -4" stroke="'+C.red+'" stroke-width="3" stroke-linecap="round"/>'+
+    '<circle cx="85" cy="59" r="1.8" fill="#2B2B2B"/><circle cx="91" cy="59" r="1.8" fill="#2B2B2B"/></g>',
+  fruit: ()=>
+    '<g><path d="M60 56 v-16" stroke="'+C.wood+'" stroke-width="6" stroke-linecap="round"/>'+
+    '<circle cx="60" cy="32" r="19" fill="'+C.leaf+'"/><circle cx="45" cy="38" r="11" fill="'+C.leafD+'"/>'+
+    '<circle cx="75" cy="37" r="11" fill="'+C.leafD+'"/>'+
+    '<circle cx="53" cy="30" r="4" fill="'+C.red+'"/><circle cx="68" cy="34" r="4" fill="'+C.red+'"/>'+
+    '<circle cx="61" cy="43" r="4" fill="'+C.red+'"/></g>',
+  wreck: ()=>
+    '<g transform="rotate(-13 60 48)">'+
+    '<path d="M34 56 h52 l-9 14 h-34 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<path d="M60 56 v-30" stroke="'+C.woodD+'" stroke-width="5" stroke-linecap="round"/>'+
+    '<path d="M62 28 q15 8 0 15 z" fill="'+C.cream+'" stroke="'+C.sandD+'" stroke-width="2"/>'+
+    '<path d="M34 56 q26 8 52 0" stroke="'+C.cream+'" stroke-width="3" fill="none"/></g>',
+  lighthouse: ()=>
+    '<g><path d="M50 58 l4 -30 h12 l4 30 z" fill="'+C.cream+'" stroke="'+C.rockD+'" stroke-width="2.5"/>'+
+    '<path d="M52 46 h16 M53 37 h14" stroke="'+C.red+'" stroke-width="5"/>'+
+    '<rect x="52" y="20" width="16" height="9" rx="2" fill="'+C.gold+'" stroke="'+C.woodD+'" stroke-width="2"/>'+
+    '<path d="M46 16 h-9 M74 16 h9" stroke="'+C.gold+'" stroke-width="3" stroke-linecap="round"/>'+
+    '<path d="M78 58 l7 -12 l7 12 z" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2"/></g>',
+  volcano: ()=>
+    '<g><path d="M28 58 l24 -34 h16 l24 34 z" fill="'+C.rockD+'"/>'+
+    '<path d="M28 58 l24 -34 h6 l-12 34 z" fill="'+C.rock+'"/>'+
+    '<path d="M50 26 q10 8 20 0 q-2 10 -10 10 q-8 0 -10 -10 z" fill="'+C.red+'"/>'+
+    '<circle cx="52" cy="12" r="7" fill="#C9D6DE"/><circle cx="66" cy="8" r="9" fill="#DDE7ED"/>'+
+    '<circle cx="78" cy="14" r="6" fill="#C9D6DE"/></g>'
+};
+const KINDS = ["palm","huts","parrot","arch","jungle","fruit","wreck","lighthouse","volcano"];
+
+function island(lv, n, open, kind){
+  const art = open ? (LAND[kind] ? LAND[kind]() : LAND.palm()) : '';
+  const fog = open ? '' :
+    '<g fill="#CFE3EC" opacity=".92"><circle cx="40" cy="40" r="16"/><circle cx="62" cy="32" r="20"/>'+
+    '<circle cx="84" cy="41" r="15"/><rect x="26" y="38" width="72" height="20" rx="10"/></g>';
+  return '<svg viewBox="0 0 120 104" aria-hidden="true">'+
+    '<ellipse cx="60" cy="80" rx="57" ry="17" fill="'+C.lagoon+'" opacity=".85"/>'+
+    '<ellipse cx="60" cy="79" rx="50" ry="13" fill="'+C.foam+'" opacity=".9"/>'+
+    '<path d="M12 74 q10 -28 48 -28 q38 0 48 28 z" fill="'+C.sand+'" stroke="'+C.sandD+'" stroke-width="3"/>'+
+    '<path d="M26 62 q34 -14 68 0" stroke="'+C.grass+'" stroke-width="7" fill="none" stroke-linecap="round" opacity="'+(open?.85:0)+'"/>'+
+    art + fog +
+    '<circle cx="24" cy="70" r="13" fill="'+C.cream+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<text class="num" x="24" y="76" text-anchor="middle">'+n+'</text></svg>';
+}
+
+const DECOS = [
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<path d="M8 40 q16 -18 40 -12 q18 5 22 14 q-20 10 -40 6 q-16 -3 -22 -8 z" fill="'+C.whale+'"/>'+
+    '<path d="M8 40 q-6 -10 -4 -16 q10 4 12 12 z" fill="'+C.whaleD+'"/>'+
+    '<path d="M20 44 q18 8 38 2" stroke="'+C.foam+'" stroke-width="3" fill="none"/>'+
+    '<circle cx="60" cy="32" r="2.4" fill="#2B2B2B"/>'+
+    '<path d="M54 16 q4 -10 10 -12 M64 18 q8 -8 14 -8" stroke="'+C.foam+'" stroke-width="3.5" fill="none" stroke-linecap="round"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<path d="M10 46 q22 -34 56 -22 q10 4 14 12 q-22 -6 -34 4 q-16 12 -36 6 z" fill="#5FA8C9"/>'+
+    '<path d="M40 26 q6 -12 16 -12 q-4 10 -8 14 z" fill="#4A8FB0"/>'+
+    '<circle cx="70" cy="34" r="2.2" fill="#2B2B2B"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<circle cx="44" cy="26" r="16" fill="'+C.pink+'"/>'+
+    '<circle cx="38" cy="24" r="2.6" fill="#2B2B2B"/><circle cx="51" cy="24" r="2.6" fill="#2B2B2B"/>'+
+    '<path d="M30 38 q-4 14 -10 18 M38 41 q-3 14 -8 19 M48 41 q3 14 8 19 M57 38 q5 14 11 18" '+
+    'stroke="'+C.pink+'" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<path d="M44 12 l14 30 h-28 z" fill="#6E8A9C"/>'+
+    '<path d="M10 46 q18 -7 34 0 q18 7 36 0" stroke="'+C.foam+'" stroke-width="4" fill="none" stroke-linecap="round"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<rect x="30" y="14" width="30" height="34" rx="9" fill="'+C.wood+'" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<rect x="27" y="22" width="36" height="5" fill="'+C.goldD+'"/><rect x="27" y="36" width="36" height="5" fill="'+C.goldD+'"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g fill="none" stroke="'+C.cream+'" stroke-width="3.5" stroke-linecap="round">'+
+    '<path d="M14 24 q8 -8 16 0 q8 8 16 0"/><path d="M50 38 q8 -8 16 0 q8 8 16 0"/></g></svg>',
+  ()=> '<svg viewBox="0 0 90 60"><g>'+
+    '<circle cx="45" cy="30" r="22" fill="'+C.cream+'" opacity=".92" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
+    '<path d="M45 10 l5 18 l-5 4 l-5 -4 z" fill="'+C.red+'"/>'+
+    '<path d="M45 50 l5 -18 l-5 -4 l-5 4 z" fill="'+C.woodD+'"/>'+
+    '<path d="M25 30 l18 -5 l4 5 l-4 5 z" fill="'+C.woodD+'"/>'+
+    '<path d="M65 30 l-18 -5 l-4 5 l4 5 z" fill="'+C.woodD+'"/></g></svg>'
+];
+
 function shipSvg(){
   return '<svg viewBox="0 0 64 64" aria-hidden="true">'+
     '<path d="M32 8 v30" stroke="#5E3616" stroke-width="4" stroke-linecap="round"/>'+
@@ -430,7 +541,8 @@ function drawMap(){
     if(i){
       const t = document.createElement("div");
       t.className = "trail" + (open ? "" : " dim");
-      t.innerHTML = "<i></i><i></i><i></i><i></i>";
+      t.innerHTML = '<span class="dots"><i></i><i></i><i></i><i></i></span>' +
+        '<span class="deco ' + (i%2 ? "l" : "r") + '">' + DECOS[(i-1) % DECOS.length]() + '</span>';
       box.appendChild(t);
     }
     const row = document.createElement("div");
@@ -438,7 +550,7 @@ function drawMap(){
     const got = save.stars[i] || 0;
     const btn = document.createElement("button");
     btn.className = "isle" + (open ? "" : " locked");
-    btn.innerHTML = island(lv, i+1, open ? "open" : "locked");
+    btn.innerHTML = island(lv, i+1, open, KINDS[i % KINDS.length]);
     if(open){
       btn.setAttribute("aria-label", "Ø " + (i+1) + ": " + lv.name);
       btn.onclick = ()=>startLevel(i);
@@ -463,23 +575,24 @@ function drawMap(){
   const here = Math.min(save.open, LEVELS.length) - 1;
   const spot = el => {
     const r = el.getBoundingClientRect(), b = box.getBoundingClientRect();
-    let left = r.left - b.left + (el.closest(".row").classList.contains("r") ? r.width - 10 : -30);
+    let left = r.left - b.left + r.width/2 - 28;
     left = Math.max(2, Math.min(left, b.width - 58));
-    return [left, r.top - b.top + 30];
+    return [left, r.top - b.top + r.height - 40];
   };
   const park = i => { const p = spot(isles[i]); ship.style.transform = "translate("+p[0]+"px,"+p[1]+"px)"; };
-  if(sailFrom !== null && sailFrom !== here){
-    park(sailFrom);
-    const from = sailFrom; sailFrom = null;
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  const sail = sailFrom !== null && sailFrom !== here;
+  ship.style.transition = "none";
+  park(sail ? sailFrom : here);
+  void ship.offsetWidth;                 // lås positionen fast før vi animerer
+  ship.style.transition = "";
+  sailFrom = null;
+  if(sail){
+    requestAnimationFrame(()=>{
       park(here); sailSound();
-      setTimeout(()=>ship.classList.add("bob"), 1700);
-    }));
+      setTimeout(()=>ship.classList.add("bob"), 1750);
+    });
   } else {
-    sailFrom = null;
-    ship.style.transition = "none";
-    park(here);
-    requestAnimationFrame(()=>{ ship.style.transition = ""; ship.classList.add("bob"); });
+    ship.classList.add("bob");
   }
 }
 
@@ -578,7 +691,7 @@ function finish(){
 }
 
 document.querySelectorAll("[data-home]").forEach(b=>{
-  b.onclick = ()=>{ try{speechSynthesis.cancel();}catch(e){} drawMap(); show("s-map"); };
+  b.onclick = ()=>{ try{speechSynthesis.cancel();}catch(e){} show("s-map"); drawMap(); };
 });
 $("#chest").innerHTML = chestSvg(true);
 drawMap();
