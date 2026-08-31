@@ -18,9 +18,10 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   body{
-    margin:0;background:var(--sea);color:var(--ink);font-family:var(--body);
-    font-weight:600;overflow-x:hidden;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80'><g fill='none' stroke='%23ffffff' stroke-opacity='0.22' stroke-width='3' stroke-linecap='round'><path d='M8 20 q9 -7 18 0 q9 7 18 0'/><path d='M68 54 q9 -7 18 0 q9 7 18 0'/></g></svg>");
+    margin:0;background:#1BA0D6;background-attachment:fixed;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80'><g fill='none' stroke='%23ffffff' stroke-opacity='0.22' stroke-width='3' stroke-linecap='round'><path d='M8 20 q9 -7 18 0 q9 7 18 0'/><path d='M68 54 q9 -7 18 0 q9 7 18 0'/></g></svg>"),
+      linear-gradient(180deg,#4FC8EC 0%,#1BA0D6 45%,#0C79AC 100%);
+    color:var(--ink);font-family:var(--body);font-weight:600;overflow-x:hidden;
   }
   .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
   .screen{display:none;flex:1;flex-direction:column;padding:14px 16px 26px}
@@ -29,7 +30,7 @@
 
   /* ---------- søkortet ---------- */
   .banner{
-    background:var(--paper);border:4px solid #3A2B1E;border-radius:12px;
+    background:var(--paper);border:4px solid #3B2A1A;border-radius:14px;
     padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;
     box-shadow:0 3px 0 rgba(0,0,0,.18);
   }
@@ -78,29 +79,48 @@
   .ship.bob{animation:bob 2.4s ease-in-out infinite}
   @keyframes bob{0%,100%{margin-top:0}50%{margin-top:-6px}}
 
+
+  /* ---- tegneserie-kontur: lægges uden om alle hovedformer, ikke om lys og skygge ---- */
+  .isle svg path:not([opacity]):not([fill="none"]),
+  .isle svg circle:not([opacity]), .isle svg ellipse:not([opacity]), .isle svg rect:not([opacity]),
+  .deco svg path:not([opacity]):not([fill="none"]),
+  .deco svg circle:not([opacity]), .deco svg ellipse:not([opacity]), .deco svg rect:not([opacity]),
+  .ship svg path:not([opacity]):not([fill="none"]),
+  .chest path:not([opacity]):not([fill="none"]),
+  .chest circle:not([opacity]), .chest rect:not([opacity]){
+    stroke:#3B2A1A;stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round;
+    paint-order:stroke fill;
+  }
+  .isle.locked svg path:not([opacity]),.isle.locked svg circle:not([opacity]),
+  .isle.locked svg rect:not([opacity]){stroke-width:2.6}
+  .purse svg circle, .meta .coins svg circle, .haul svg circle{
+    stroke:#3B2A1A;stroke-width:1.7;paint-order:stroke fill;
+  }
+  .haul svg circle{stroke-width:1.4}
+
   /* ---------- fælles bjælke inde på en ø ---------- */
   .bar{display:flex;align-items:center;gap:12px;padding:2px 0 16px}
-  .back{width:46px;height:46px;flex:0 0 46px;border-radius:12px;border:4px solid #3A2B1E;
+  .back{width:46px;height:46px;flex:0 0 46px;border-radius:14px;border:4px solid #3B2A1A;
     background:var(--paper);cursor:pointer;display:grid;place-items:center;color:var(--ink);
     box-shadow:0 3px 0 rgba(0,0,0,.18)}
   .back:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.18)}
   .back:focus-visible{outline:3px solid #fff;outline-offset:2px}
-  .track{flex:1;height:18px;border-radius:999px;background:rgba(0,0,0,.25);
-    border:3px solid #3A2B1E;overflow:hidden}
+  .track{flex:1;height:18px;border-radius:999px;background:rgba(9,60,86,.35);
+    border:3px solid #3B2A1A;overflow:hidden}
   .fill{height:100%;width:0;background:var(--gold);transition:width .35s cubic-bezier(.2,.8,.3,1)}
 
   /* ---------- lær-kort ---------- */
   .stage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;text-align:center}
   .scroll{
-    background:var(--paper-2);border:5px solid #3A2B1E;border-radius:18px;
+    background:var(--paper-2);border:5px solid #3B2A1A;border-radius:22px;
     padding:30px 22px 26px;display:flex;flex-direction:column;align-items:center;gap:12px;
     cursor:pointer;position:relative;
-    box-shadow:0 6px 0 rgba(58,43,30,.35), inset 0 0 0 3px var(--paper-2), inset 0 0 0 6px #EBC978;
+    box-shadow:0 8px 18px rgba(9,60,86,.28), inset 0 -6px 0 rgba(215,168,90,.28);
   }
   .scroll::before,.scroll::after{
     content:"";position:absolute;left:14px;right:14px;height:8px;border-radius:4px;
     background:repeating-linear-gradient(115deg,#B0762A 0 7px,#E8B863 7px 14px);
-    border:2.5px solid #3A2B1E;
+    border:2px solid #A96F2A;
   }
   .scroll::before{top:-5px}
   .scroll::after{bottom:-5px}
@@ -113,43 +133,43 @@
   .plank{
     width:100%;border:none;border-radius:14px;background:var(--hull);color:#FFF6E5;cursor:pointer;
     font-family:var(--display);font-size:23px;font-weight:700;padding:16px 20px;
-    border:4px solid #3A2B1E;border-bottom-width:8px;
+    border:4px solid #3B2A1A;box-shadow:0 6px 0 #3B2A1A;
   }
-  .plank:active{transform:translateY(3px);border-bottom-width:2px}
+  .plank:active{transform:translateY(4px);box-shadow:0 2px 0 #3B2A1A}
   .plank:focus-visible{outline:4px solid #fff;outline-offset:3px}
-  .plank.gold{background:var(--gold);color:#4A3000;border-bottom-color:var(--gold-dark)}
-  .plank.pale{background:var(--paper);color:var(--ink);border-bottom-color:var(--parch-edge)}
+  .plank.gold{background:linear-gradient(180deg,#FFDD6E,#F0A800);color:#5A3B00;box-shadow:0 6px 0 #3B2A1A}
+  .plank.pale{background:linear-gradient(180deg,#FFF8E7,#F3DFB0);color:var(--ink);box-shadow:0 6px 0 #3B2A1A}
 
   /* ---------- legen ---------- */
   .ask{text-align:center}
   .ask h2{font-size:19px;color:#EAF6FC;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.35)}
   .earbtn{
     margin:14px auto 20px;width:128px;height:128px;border-radius:50%;cursor:pointer;
-    background:var(--gold);color:#3A2B1E;display:grid;place-items:center;
-    border:4px solid #3A2B1E;border-bottom-width:10px;
+    background:linear-gradient(180deg,#FFDD6E,#F0A800);color:#5A3B00;display:grid;place-items:center;
+    border:4px solid #3B2A1A;box-shadow:0 8px 0 #3B2A1A;
   }
   .earbtn svg{width:56px;height:56px}
-  .earbtn:active{transform:translateY(4px);border-bottom-width:3px}
+  .earbtn:active{transform:translateY(5px);box-shadow:0 3px 0 #3B2A1A}
   .earbtn:focus-visible{outline:4px solid #fff;outline-offset:4px}
   .earbtn.ping{animation:ping 1s ease-in-out infinite}
   @keyframes ping{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .crate{
-    background:repeating-linear-gradient(180deg,#FFF8E7 0 26px,#F7E7BF 26px 29px);
-    border:5px solid #3A2B1E;border-radius:12px;cursor:pointer;
+    background:linear-gradient(180deg,#FFFDF5,#F4E2B8);
+    border:5px solid #3B2A1A;border-radius:18px;cursor:pointer;
     aspect-ratio:1/1;display:grid;place-items:center;font-size:60px;line-height:1;position:relative;
     box-shadow:0 4px 0 rgba(0,0,0,.2);transition:transform .12s ease,border-color .12s ease,background .12s ease;
   }
   .crate:active{transform:translateY(3px)}
   .crate:focus-visible{outline:4px solid #fff;outline-offset:3px}
-  .crate.yes{background:#B6EFA0;border-color:#3A2B1E;background-image:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+  .crate.yes{background:#B6EFA0;border-color:#3B2A1A;background-image:none;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
   @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1.06)}}
   .crate.nope{background:var(--red-soft);background-image:none;border-color:#C42B2B;cursor:default;animation:wob .5s ease}
   .crate.nope .em{filter:grayscale(1);opacity:.32}
   .crate.nope::after{content:"✕";position:absolute;top:0;right:11px;font-family:var(--body);
     font-size:30px;font-weight:800;color:var(--red)}
   @keyframes wob{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
-  .crate.show{border-color:#249445;animation:beat 1s ease-in-out infinite}
+  .crate.show{border-color:#2E9E4C;animation:beat 1s ease-in-out infinite}
   @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 
   /* ---------- fejring og skattekiste ---------- */
@@ -166,7 +186,13 @@
     75%{opacity:1;transform:translate(-50%,-60%) scale(1)}
     100%{opacity:0;transform:translate(-50%,-85%) scale(.95)}}
   .done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
-  .chest{width:172px;height:150px}
+  .crew{display:flex;align-items:flex-end;justify-content:center;gap:2px}
+  .mate{width:104px;height:104px;margin-bottom:-4px;animation:cheer 1.6s ease-in-out infinite}
+  .mate svg{width:100%;height:100%;display:block}
+  .mate svg path:not([opacity]):not([fill="none"]),.mate svg circle:not([opacity]),
+  .mate svg ellipse:not([opacity]){stroke:#3B2A1A;stroke-width:2.6;stroke-linejoin:round;paint-order:stroke fill}
+  @keyframes cheer{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-7px)}}
+  .chest{width:158px;height:138px}
   .haul{display:flex;gap:11px}
   .haul svg{width:54px;height:54px;animation:drop .5s cubic-bezier(.2,1.5,.4,1) backwards}
   .haul svg:nth-child(2){animation-delay:.16s}
@@ -182,6 +208,47 @@
       transition-duration:.01ms !important}
   }
 </style>
+
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <linearGradient id="gSand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE7A6"/><stop offset="1" stop-color="#E9A63C"/></linearGradient>
+    <linearGradient id="gLagoon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8FE9F8"/><stop offset="1" stop-color="#37BDE0"/></linearGradient>
+    <linearGradient id="gFoam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0FCFF"/><stop offset="1" stop-color="#BFEFFA"/></linearGradient>
+    <linearGradient id="gLeaf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#77E28C"/><stop offset="1" stop-color="#2E9E4C"/></linearGradient>
+    <linearGradient id="gLeafD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4FBE68"/><stop offset="1" stop-color="#1E7A3C"/></linearGradient>
+    <linearGradient id="gWood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CE8B47"/><stop offset="1" stop-color="#7A431A"/></linearGradient>
+    <linearGradient id="gStraw" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFDF93"/><stop offset="1" stop-color="#D89B2E"/></linearGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE486"/><stop offset="1" stop-color="#E8A100"/></linearGradient>
+    <linearGradient id="gRock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C6D3DD"/><stop offset="1" stop-color="#71879A"/></linearGradient>
+    <linearGradient id="gRockD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8497A6"/><stop offset="1" stop-color="#4E606E"/></linearGradient>
+    <linearGradient id="gLava" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFC93D"/><stop offset="1" stop-color="#E8432B"/></linearGradient>
+    <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF8A78"/><stop offset="1" stop-color="#D1332B"/></linearGradient>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8ACEFF"/><stop offset="1" stop-color="#2E7ED6"/></linearGradient>
+    <linearGradient id="gPink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFAFCE"/><stop offset="1" stop-color="#E85590"/></linearGradient>
+    <linearGradient id="gWhale" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9CC1E4"/><stop offset="1" stop-color="#3E6698"/></linearGradient>
+    <linearGradient id="gDolphin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8FD4F5"/><stop offset="1" stop-color="#2E86C8"/></linearGradient>
+    <linearGradient id="gTurtle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6BCB7E"/><stop offset="1" stop-color="#237A42"/></linearGradient>
+    <linearGradient id="gCream" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFDF5"/><stop offset="1" stop-color="#F6E3B8"/></linearGradient>
+  </defs>
+</svg>
 
 <div class="app">
   <section id="s-map" class="screen on">
@@ -230,7 +297,10 @@
 
   <section id="s-done" class="screen">
     <div class="done">
-      <svg class="chest" id="chest" viewBox="0 0 120 104" aria-hidden="true"></svg>
+      <div class="crew">
+        <div class="mate" id="mate"></div>
+        <svg class="chest" id="chest" viewBox="0 0 120 104" aria-hidden="true"></svg>
+      </div>
       <div class="haul" id="haul"></div>
       <h2 id="donetitle"></h2>
       <p id="donetext"></p>
@@ -298,212 +368,246 @@ function store(){ try{ localStorage.setItem(KEY, JSON.stringify(save)); }catch(e
 const $ = s => document.querySelector(s);
 const live = $("#live");
 
-const OL = 'stroke="#3A2B1E" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
-const OLt= 'stroke="#3A2B1E" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
-const C = {
-  sand:"#FFC94F", sandD:"#E09A2A", grass:"#4ED166", grassD:"#2AA347",
-  wood:"#B06B2E", woodD:"#7A431A", rock:"#93A6B5", rockD:"#5F7385",
-  gold:"#FFC61A", goldD:"#D18B00", red:"#FF4D4D", redD:"#C42B2B",
-  cream:"#FFF6E5", lagoon:"#5FD7F0", foam:"#C8F3FC",
-  leaf:"#3FBF5B", leafD:"#249445", pink:"#FF6FA5", blue:"#4FA8FF",
-  whale:"#5E86B8", whaleD:"#3C5F8A", shade:"rgba(58,43,30,.14)"
-};
-const HI = '<ellipse cx="0" cy="0" rx="0" ry="0" fill="#fff" opacity=".35"/>';
+/* ---- alt tegnet fra bunden som kode: bløde former med lys og skygge ---- */
+const ED = 'stroke="#5A4020" stroke-opacity=".22" stroke-width="1.6" stroke-linejoin="round"';
+const G = (id)=>'url(#'+id+')';
 
 function coin(on){
   if(!on) return '<svg viewBox="0 0 24 24" aria-hidden="true">'+
-    '<circle cx="12" cy="12" r="9.5" fill="rgba(255,255,255,.22)" stroke="rgba(255,255,255,.5)" stroke-width="2"/></svg>';
+    '<circle cx="12" cy="12" r="9.5" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.45)" stroke-width="1.8"/></svg>';
   return '<svg viewBox="0 0 24 24" aria-hidden="true">'+
-    '<circle cx="12" cy="12" r="9.5" fill="'+C.gold+'" '+OLt+'/>'+
-    '<circle cx="12" cy="12" r="5.4" fill="none" stroke="'+C.goldD+'" stroke-width="1.8"/>'+
-    '<ellipse cx="9" cy="8.4" rx="2.6" ry="1.6" fill="#fff" opacity=".55" transform="rotate(-30 9 8.4)"/></svg>';
+    '<circle cx="12" cy="12.8" r="9.5" fill="#C98A05" opacity=".55"/>'+
+    '<circle cx="12" cy="12" r="9.5" fill="'+G('gGold')+'"/>'+
+    '<circle cx="12" cy="12" r="5.6" fill="none" stroke="#D89B12" stroke-width="1.7"/>'+
+    '<ellipse cx="9" cy="8" rx="3" ry="1.8" fill="#fff" opacity=".6" transform="rotate(-32 9 8)"/></svg>';
 }
 
 function palm(x,y,k,flip){
   return '<g transform="translate('+x+','+y+') scale('+(flip?-k:k)+','+k+')">'+
-    '<path d="M0 0 q-4 -14 3 -25" fill="none" stroke="'+C.woodD+'" stroke-width="7" stroke-linecap="round"/>'+
-    '<path d="M0 0 q-4 -14 3 -25" fill="none" stroke="'+C.wood+'" stroke-width="4" stroke-linecap="round"/>'+
-    '<path d="M3 -25 q-12 -9 -20 -4 q9 -2 19 3 z" fill="'+C.leaf+'" '+OLt+'/>'+
-    '<path d="M3 -25 q13 -10 21 -4 q-10 -2 -20 4 z" fill="'+C.leafD+'" '+OLt+'/>'+
-    '<path d="M3 -25 q-9 -13 -3 -19 q4 8 5 18 z" fill="'+C.leaf+'" '+OLt+'/>'+
-    '<path d="M3 -25 q10 -12 16 -9 q-9 2 -14 10 z" fill="'+C.leafD+'" '+OLt+'/>'+
-    '<circle cx="-1" cy="-21" r="3" fill="'+C.woodD+'" '+OLt+'/>'+
-    '<circle cx="6" cy="-20" r="2.6" fill="'+C.woodD+'" '+OLt+'/></g>';
+    '<path d="M0 0 q-5 -15 3 -27" fill="none" stroke="#7A4A1E" stroke-width="7.5" stroke-linecap="round"/>'+
+    '<path d="M0 0 q-5 -15 3 -27" fill="none" stroke="'+G('gWood')+'" stroke-width="5" stroke-linecap="round"/>'+
+    '<path d="M-1 -6 q4 -1 6 1 M0 -14 q4 -1 6 1" stroke="#8E5A28" stroke-width="1.6" fill="none" opacity=".6"/>'+
+    '<path d="M3 -27 q-14 -12 -24 -6 q11 -1 22 5 z" fill="'+G('gLeafD')+'"/>'+
+    '<path d="M3 -27 q15 -13 25 -6 q-12 -1 -23 6 z" fill="'+G('gLeaf')+'"/>'+
+    '<path d="M3 -27 q-11 -15 -4 -22 q5 9 6 21 z" fill="'+G('gLeaf')+'"/>'+
+    '<path d="M3 -27 q12 -14 20 -11 q-11 3 -17 12 z" fill="'+G('gLeafD')+'"/>'+
+    '<path d="M3 -27 q-16 -3 -22 4 q11 -4 21 -1 z" fill="'+G('gLeaf')+'" opacity=".9"/>'+
+    '<circle cx="-1" cy="-22" r="3.2" fill="#7A4A1E"/><circle cx="-1.8" cy="-23" r="1.1" fill="#A9713A"/>'+
+    '<circle cx="6" cy="-21" r="2.8" fill="#7A4A1E"/></g>';
+}
+function bush(x,y,k,dark){
+  const f = dark ? G('gLeafD') : G('gLeaf');
+  return '<g transform="translate('+x+','+y+') scale('+k+')">'+
+    '<ellipse cx="0" cy="2" rx="15" ry="9" fill="#1E7A3C" opacity=".25"/>'+
+    '<circle cx="-8" cy="0" r="8" fill="'+f+'"/><circle cx="8" cy="1" r="7.5" fill="'+f+'"/>'+
+    '<circle cx="0" cy="-6" r="10" fill="'+f+'"/>'+
+    '<path d="M-6 -9 q7 -4 13 0" stroke="#fff" stroke-width="2.4" fill="none" opacity=".45" stroke-linecap="round"/></g>';
 }
 function rock(x,y,k){
   return '<g transform="translate('+x+','+y+') scale('+k+')">'+
-    '<path d="M-13 0 q1 -11 8 -12 q4 -6 10 -1 q8 1 8 13 z" fill="'+C.rock+'" '+OLt+'/>'+
-    '<path d="M-6 -9 q4 -3 8 0" fill="none" stroke="'+C.rockD+'" stroke-width="2"/></g>';
+    '<ellipse cx="0" cy="1" rx="15" ry="5" fill="#5A4020" opacity=".18"/>'+
+    '<path d="M-14 0 q1 -12 9 -13 q5 -7 11 -1 q9 2 8 14 z" fill="'+G('gRock')+'"/>'+
+    '<path d="M-6 -10 q5 -4 10 0 q-5 -1 -10 0 z" fill="#fff" opacity=".35"/></g>';
 }
 
 const LAND = {
-  palm: ()=> rock(96,66,.7) + palm(38,60,1,true) + palm(70,54,1.25) +
-    '<path d="M52 66 l4 -5 l4 5 l5 1 l-5 3 l-2 5 l-3 -5 l-6 -1 z" fill="'+C.red+'" '+OLt+'/>',
+  palm: ()=> rock(97,68,.65) + bush(34,64,.6) + palm(40,62,.95,true) + palm(72,56,1.3) +
+    '<path d="M55 70 l4 -6 l4 6 l6 1 l-6 4 l-2 6 l-4 -6 l-6 -1 z" fill="'+G('gRed')+'"/>',
   huts: ()=>
-    '<g><path d="M24 56 l16 -21 l16 21 z" fill="'+C.gold+'" '+OL+'/>'+
-    '<path d="M30 50 h20 M27 54 h26" stroke="'+C.goldD+'" stroke-width="2"/>'+
-    '<rect x="30" y="55" width="20" height="12" fill="'+C.wood+'" '+OLt+'/>'+
-    '<rect x="36" y="59" width="8" height="8" fill="'+C.woodD+'"/>'+
-    '<path d="M58 58 l19 -25 l19 25 z" fill="'+C.gold+'" '+OL+'/>'+
-    '<path d="M65 51 h24 M62 55 h30" stroke="'+C.goldD+'" stroke-width="2"/>'+
-    '<rect x="65" y="57" width="24" height="13" fill="'+C.wood+'" '+OLt+'/>'+
-    '<rect x="73" y="61" width="9" height="9" fill="'+C.woodD+'"/>'+
-    '<path d="M77 33 v-8 l9 3 l-9 3" fill="'+C.red+'" '+OLt+'/></g>',
+    '<g><ellipse cx="42" cy="70" rx="20" ry="5" fill="#5A4020" opacity=".18"/>'+
+    '<ellipse cx="79" cy="73" rx="24" ry="6" fill="#5A4020" opacity=".18"/>'+
+    '<path d="M24 57 l17 -23 l17 23 z" fill="'+G('gStraw')+'"/>'+
+    '<path d="M41 34 l17 23 h-9 z" fill="#C98A2E" opacity=".45"/>'+
+    '<path d="M30 51 h22 M27 55 h29" stroke="#B07A22" stroke-width="1.8" opacity=".7"/>'+
+    '<rect x="30" y="56" width="22" height="13" rx="2" fill="'+G('gWood')+'"/>'+
+    '<rect x="37" y="60" width="9" height="9" rx="1.5" fill="#6B3C15"/>'+
+    '<path d="M58 60 l20 -27 l20 27 z" fill="'+G('gStraw')+'"/>'+
+    '<path d="M78 33 l20 27 h-11 z" fill="#C98A2E" opacity=".45"/>'+
+    '<path d="M65 52 h26 M62 56 h32" stroke="#B07A22" stroke-width="1.8" opacity=".7"/>'+
+    '<rect x="65" y="60" width="26" height="14" rx="2" fill="'+G('gWood')+'"/>'+
+    '<rect x="74" y="64" width="10" height="10" rx="1.5" fill="#6B3C15"/>'+
+    '<path d="M78 33 v-9 l10 3.5 l-10 3.5" fill="'+G('gRed')+'"/></g>',
   parrot: ()=>
-    '<g>'+ palm(30,62,.85,true) +
-    '<path d="M72 70 q-4 -8 2 -12" fill="none" stroke="'+C.woodD+'" stroke-width="4" stroke-linecap="round"/>'+
-    '<path d="M84 44 q10 12 2 22 q-8 8 -14 -2 z" fill="'+C.blue+'" '+OLt+'/>'+
-    '<ellipse cx="74" cy="45" rx="13" ry="16" fill="'+C.red+'" '+OL+'/>'+
-    '<path d="M70 38 q10 4 8 18 q-8 4 -12 -4 z" fill="'+C.gold+'" '+OLt+'/>'+
-    '<circle cx="76" cy="27" r="9.5" fill="'+C.red+'" '+OL+'/>'+
-    '<circle cx="79" cy="25" r="3" fill="#fff" '+OLt+'/><circle cx="80" cy="25" r="1.5" fill="#3A2B1E"/>'+
-    '<path d="M85 25 q8 3 0 8 q-4 -3 -3 -8 z" fill="'+C.gold+'" '+OLt+'/></g>',
+    '<g>'+ palm(28,64,.8,true) + bush(96,68,.55,true) +
+    '<path d="M74 72 q-5 -9 2 -14" fill="none" stroke="#7A4A1E" stroke-width="4.5" stroke-linecap="round"/>'+
+    '<path d="M86 44 q12 13 3 24 q-9 9 -16 -2 z" fill="'+G('gBlue')+'"/>'+
+    '<ellipse cx="75" cy="45" rx="13.5" ry="16.5" fill="'+G('gRed')+'"/>'+
+    '<path d="M71 37 q11 5 9 19 q-9 5 -13 -4 z" fill="'+G('gGold')+'"/>'+
+    '<circle cx="77" cy="27" r="10" fill="'+G('gRed')+'"/>'+
+    '<ellipse cx="73" cy="21" rx="5" ry="3" fill="#fff" opacity=".4"/>'+
+    '<circle cx="80" cy="25" r="3.4" fill="#fff"/><circle cx="81" cy="25" r="1.7" fill="#3A2B1E"/>'+
+    '<path d="M86 24 q9 4 0 9 q-4 -4 -3 -9 z" fill="'+G('gGold')+'"/></g>',
   arch: ()=>
-    '<g><path d="M26 60 v-16 a26 26 0 0 1 52 0 v16 h-15 v-16 a11 11 0 0 0 -22 0 v16 z" fill="'+C.rock+'" '+OL+'/>'+
-    '<path d="M36 34 q6 -4 12 -1 M62 40 q4 4 4 9" fill="none" stroke="'+C.rockD+'" stroke-width="2.5"/>'+
-    '<path d="M46 22 q6 -6 14 -2" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'+
-    rock(92,62,.8) + '</g>',
+    '<g><ellipse cx="52" cy="64" rx="30" ry="6" fill="#5A4020" opacity=".18"/>'+
+    '<path d="M26 62 v-17 a26 26 0 0 1 52 0 v17 h-15 v-17 a11 11 0 0 0 -22 0 v17 z" fill="'+G('gRock')+'"/>'+
+    '<path d="M26 62 v-17 a26 26 0 0 1 14 -22 a30 30 0 0 0 -3 22 v17 z" fill="#fff" opacity=".28"/>'+
+    '<path d="M60 26 q7 2 11 7" stroke="#5F7385" stroke-width="2" fill="none" opacity=".5"/>'+
+    rock(94,64,.75) + bush(20,66,.5) + '</g>',
   jungle: ()=>
-    '<g><circle cx="38" cy="46" r="14" fill="'+C.leafD+'" '+OL+'/>'+
-    '<circle cx="57" cy="40" r="17" fill="'+C.leaf+'" '+OL+'/>'+
-    '<circle cx="76" cy="47" r="13" fill="'+C.leafD+'" '+OL+'/>'+
-    '<path d="M50 34 q7 -4 13 1" fill="none" stroke="#fff" stroke-width="3" opacity=".5" stroke-linecap="round"/>'+
-    '<ellipse cx="88" cy="65" rx="11" ry="7.5" fill="'+C.red+'" '+OL+'/>'+
-    '<path d="M79 62 q-7 -2 -9 -7 M97 62 q7 -2 9 -7" fill="none" stroke="'+C.red+'" stroke-width="4" stroke-linecap="round"/>'+
-    '<circle cx="84" cy="62" r="2.6" fill="#fff" '+OLt+'/><circle cx="92" cy="62" r="2.6" fill="#fff" '+OLt+'/>'+
-    '<circle cx="84.5" cy="62" r="1.2" fill="#3A2B1E"/><circle cx="92.5" cy="62" r="1.2" fill="#3A2B1E"/></g>',
+    '<g>'+ bush(36,50,1) + bush(58,44,1.25,true) + bush(78,50,.95) + palm(96,62,.6) +
+    '<ellipse cx="86" cy="70" rx="13" ry="4" fill="#5A4020" opacity=".18"/>'+
+    '<ellipse cx="86" cy="65" rx="11" ry="8" fill="'+G('gRed')+'"/>'+
+    '<path d="M77 62 q-8 -2 -10 -8 M95 62 q8 -2 10 -8" fill="none" stroke="#E8564B" stroke-width="4" stroke-linecap="round"/>'+
+    '<circle cx="82" cy="62" r="3" fill="#fff"/><circle cx="90" cy="62" r="3" fill="#fff"/>'+
+    '<circle cx="82.6" cy="62" r="1.4" fill="#3A2B1E"/><circle cx="90.6" cy="62" r="1.4" fill="#3A2B1E"/>'+
+    '<path d="M83 69 q4 3 8 0" stroke="#B3352C" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>',
   fruit: ()=>
-    '<g><path d="M60 60 v-18" stroke="'+C.woodD+'" stroke-width="8" stroke-linecap="round"/>'+
-    '<circle cx="60" cy="30" r="21" fill="'+C.leaf+'" '+OL+'/>'+
-    '<circle cx="42" cy="38" r="12" fill="'+C.leafD+'" '+OL+'/>'+
-    '<circle cx="78" cy="37" r="12" fill="'+C.leafD+'" '+OL+'/>'+
-    '<path d="M50 22 q9 -5 18 1" fill="none" stroke="#fff" stroke-width="3.5" opacity=".5" stroke-linecap="round"/>'+
-    '<circle cx="50" cy="32" r="5" fill="'+C.red+'" '+OLt+'/>'+
-    '<circle cx="70" cy="36" r="5" fill="'+C.red+'" '+OLt+'/>'+
-    '<circle cx="61" cy="45" r="5" fill="'+C.gold+'" '+OLt+'/>'+
-    rock(96,64,.6)+'</g>',
+    '<g><ellipse cx="60" cy="64" rx="24" ry="6" fill="#5A4020" opacity=".18"/>'+
+    '<path d="M60 62 v-20" stroke="#7A4A1E" stroke-width="9" stroke-linecap="round"/>'+
+    '<path d="M60 62 v-20" stroke="'+G('gWood')+'" stroke-width="6" stroke-linecap="round"/>'+
+    '<circle cx="60" cy="30" r="22" fill="'+G('gLeaf')+'"/>'+
+    '<circle cx="41" cy="38" r="13" fill="'+G('gLeafD')+'"/>'+
+    '<circle cx="79" cy="37" r="13" fill="'+G('gLeafD')+'"/>'+
+    '<path d="M49 20 q11 -6 21 1" stroke="#fff" stroke-width="3.5" fill="none" opacity=".45" stroke-linecap="round"/>'+
+    '<circle cx="49" cy="33" r="5.5" fill="'+G('gRed')+'"/><circle cx="47" cy="31" r="1.6" fill="#fff" opacity=".7"/>'+
+    '<circle cx="71" cy="37" r="5.5" fill="'+G('gRed')+'"/><circle cx="69" cy="35" r="1.6" fill="#fff" opacity=".7"/>'+
+    '<circle cx="60" cy="46" r="5.5" fill="'+G('gGold')+'"/>'+ bush(24,66,.55) +'</g>',
   wreck: ()=>
-    '<g transform="rotate(-14 60 50)">'+
-    '<path d="M30 54 h58 l-10 17 h-38 z" fill="'+C.wood+'" '+OL+'/>'+
-    '<path d="M33 61 h52 M36 67 h46" stroke="'+C.woodD+'" stroke-width="2.5"/>'+
-    '<path d="M60 54 v-32" stroke="'+C.woodD+'" stroke-width="6" stroke-linecap="round"/>'+
-    '<path d="M63 24 q19 10 1 19 l-1 -19 z" fill="'+C.cream+'" '+OL+'/>'+
-    '<path d="M63 33 l6 5 l-6 3" fill="'+C.cream+'" '+OLt+'/>'+
-    '<circle cx="46" cy="63" r="4" fill="'+C.woodD+'"/>'+
-    '<path d="M60 22 h11 l-3 4 l3 4 h-11" fill="'+C.redD+'" '+OLt+'/></g>',
+    '<g transform="rotate(-13 60 52)">'+
+    '<ellipse cx="58" cy="72" rx="30" ry="6" fill="#5A4020" opacity=".2"/>'+
+    '<path d="M30 55 h58 l-10 18 h-38 z" fill="'+G('gWood')+'"/>'+
+    '<path d="M30 55 h14 l-6 18 h-4 z" fill="#fff" opacity=".2"/>'+
+    '<path d="M33 62 h52 M36 68 h44" stroke="#7A431A" stroke-width="2.2" opacity=".65"/>'+
+    '<path d="M60 55 v-33" stroke="#7A4A1E" stroke-width="6" stroke-linecap="round"/>'+
+    '<path d="M63 24 q20 11 1 20 z" fill="'+G('gCream')+'"/>'+
+    '<path d="M63 34 l7 5 l-7 4 z" fill="#E8D9B4"/>'+
+    '<circle cx="45" cy="64" r="4.5" fill="#6B3C15" opacity=".8"/>'+
+    '<path d="M60 22 h12 l-3.5 4.5 l3.5 4.5 h-12" fill="'+G('gRed')+'"/></g>',
   lighthouse: ()=>
-    '<g><path d="M48 62 l5 -34 h14 l5 34 z" fill="'+C.cream+'" '+OL+'/>'+
-    '<path d="M50.5 51 h19" stroke="'+C.red+'" stroke-width="6"/>'+
-    '<path d="M52 41 h16" stroke="'+C.red+'" stroke-width="6"/>'+
-    '<rect x="51" y="18" width="18" height="11" rx="2" fill="'+C.gold+'" '+OL+'/>'+
-    '<path d="M49 18 h22" stroke="#3A2B1E" stroke-width="3" stroke-linecap="round"/>'+
-    '<path d="M60 8 l-5 8 h10 z" fill="'+C.red+'" '+OLt+'/>'+
-    '<path d="M44 20 l-12 -4 M76 20 l12 -4 M44 27 l-13 3 M76 27 l13 3" stroke="'+C.gold+'" stroke-width="3.5" stroke-linecap="round"/>'+
-    rock(30,64,.75)+'</g>',
+    '<g><ellipse cx="60" cy="66" rx="22" ry="6" fill="#5A4020" opacity=".18"/>'+
+    '<path d="M48 64 l5 -35 h14 l5 35 z" fill="'+G('gCream')+'"/>'+
+    '<path d="M48 64 l5 -35 h5 l-4 35 z" fill="#fff" opacity=".5"/>'+
+    '<path d="M50.6 52 h19" stroke="#E8564B" stroke-width="6.5"/>'+
+    '<path d="M52 42 h16" stroke="#E8564B" stroke-width="6.5"/>'+
+    '<rect x="51" y="18" width="18" height="12" rx="2.5" fill="'+G('gGold')+'"/>'+
+    '<rect x="48" y="15" width="24" height="4" rx="2" fill="#7A4A1E"/>'+
+    '<path d="M60 6 l-6 9 h12 z" fill="'+G('gRed')+'"/>'+
+    '<path d="M44 21 l-13 -5 M76 21 l13 -5 M44 28 l-14 4 M76 28 l14 4" stroke="#FFD75E" stroke-width="4" stroke-linecap="round" opacity=".85"/>'+
+    rock(28,66,.7) + bush(90,68,.5,true) + '</g>',
   volcano: ()=>
-    '<g><path d="M24 60 l24 -36 h24 l24 36 z" fill="'+C.rockD+'" '+OL+'/>'+
-    '<path d="M24 60 l24 -36 h7 l-14 36 z" fill="'+C.rock+'"/>'+
-    '<path d="M46 25 q14 7 28 0 q-3 12 -14 12 q-11 0 -14 -12 z" fill="'+C.red+'" '+OLt+'/>'+
-    '<path d="M50 30 q6 14 -2 22 M70 30 q-3 12 4 20" fill="none" stroke="'+C.red+'" stroke-width="4" stroke-linecap="round"/>'+
-    '<circle cx="48" cy="12" r="8" fill="#D7E4EC" '+OLt+'/>'+
-    '<circle cx="63" cy="6" r="10" fill="#EDF4F8" '+OLt+'/>'+
-    '<circle cx="78" cy="13" r="7" fill="#D7E4EC" '+OLt+'/></g>'
+    '<g><path d="M22 62 l26 -38 h24 l26 38 z" fill="'+G('gRockD')+'"/>'+
+    '<path d="M22 62 l26 -38 h8 l-16 38 z" fill="#96A9B8" opacity=".65"/>'+
+    '<path d="M46 25 q14 8 28 0 q-3 13 -14 13 q-11 0 -14 -13 z" fill="'+G('gLava')+'"/>'+
+    '<path d="M50 31 q7 15 -2 24 M70 31 q-3 13 5 21" fill="none" stroke="#FF6B3D" stroke-width="4.5" stroke-linecap="round"/>'+
+    '<circle cx="47" cy="12" r="8.5" fill="#E3EDF3"/><circle cx="63" cy="6" r="10.5" fill="#F2F8FB"/>'+
+    '<circle cx="79" cy="13" r="7.5" fill="#E3EDF3"/>'+
+    '<circle cx="60" cy="4" r="5" fill="#fff" opacity=".8"/>'+ bush(24,66,.55,true) +'</g>'
 };
 const KINDS = ["palm","huts","parrot","arch","jungle","fruit","wreck","lighthouse","volcano"];
 
 function island(lv, n, open, kind){
   const land = open ? (LAND[kind] ? LAND[kind]() : LAND.palm()) : '';
   const fog = open ? '' :
-    '<g fill="#E4F2F8" '+OL+'><circle cx="38" cy="42" r="17"/><circle cx="62" cy="33" r="21"/>'+
-    '<circle cx="86" cy="43" r="16"/><rect x="24" y="40" width="76" height="22" rx="11"/></g>';
+    '<g fill="#EAF6FB"><circle cx="36" cy="43" r="18"/><circle cx="61" cy="33" r="22"/>'+
+    '<circle cx="87" cy="44" r="17"/><rect x="22" y="41" width="78" height="24" rx="12"/>'+
+    '<circle cx="50" cy="28" r="10" fill="#fff" opacity=".7"/></g>';
   return '<svg viewBox="0 0 120 104" aria-hidden="true">'+
-    '<ellipse cx="60" cy="82" rx="57" ry="17" fill="'+C.lagoon+'" '+OL+'/>'+
-    '<ellipse cx="60" cy="80" rx="47" ry="12" fill="'+C.foam+'"/>'+
-    '<path d="M10 76 q10 -30 50 -30 q40 0 50 30 z" fill="'+C.sand+'" '+OL+'/>'+
-    '<path d="M10 76 q10 -30 50 -30 q-14 15 -18 30 z" fill="#FFE0A0"/>'+
-    (open ? '<path d="M20 66 q40 -26 80 0 q-40 10 -80 0 z" fill="'+C.grass+'" '+OL+'/>'+
-            '<path d="M28 60 q32 -14 64 0 q-32 -6 -64 0 z" fill="#6FE083"/>' : '')+
+    '<ellipse cx="60" cy="84" rx="57" ry="16" fill="'+G('gLagoon')+'"/>'+
+    '<ellipse cx="60" cy="81" rx="46" ry="11" fill="'+G('gFoam')+'"/>'+
+    '<path d="M10 78 q10 -32 50 -32 q40 0 50 32 z" fill="'+G('gSand')+'"/>'+
+    '<path d="M10 78 q10 -32 50 -32 q-15 16 -19 32 z" fill="#FFF0C4" opacity=".75"/>'+
+    (open ? '<path d="M18 68 q42 -28 84 0 q-42 11 -84 0 z" fill="'+G('gLeaf')+'"/>'+
+            '<path d="M28 61 q32 -15 64 0 q-32 -7 -64 0 z" fill="#8CEB9B" opacity=".85"/>' : '')+
     land + fog +
-    '<circle cx="22" cy="72" r="14" fill="'+C.cream+'" '+OL+'/>'+
-    '<text class="num" x="22" y="78" text-anchor="middle">'+n+'</text></svg>';
+    '<circle cx="21" cy="74" r="14" fill="'+G('gCream')+'" stroke="#C08A3A" stroke-width="2"/>'+
+    '<text class="num" x="21" y="80" text-anchor="middle">'+n+'</text></svg>';
 }
 
 const DECOS = [
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<path d="M6 40 q16 -20 42 -13 q19 5 24 15 q-22 11 -43 7 q-17 -3 -23 -9 z" fill="'+C.whale+'" '+OL+'/>'+
-    '<path d="M14 44 q20 9 43 4 q-19 8 -37 3 z" fill="'+C.foam+'"/>'+
-    '<path d="M6 40 q-7 -12 -5 -19 q12 5 14 15 z" fill="'+C.whaleD+'" '+OL+'/>'+
-    '<circle cx="61" cy="31" r="3.4" fill="#fff" '+OLt+'/><circle cx="62" cy="31" r="1.6" fill="#3A2B1E"/>'+
-    '<path d="M55 15 q3 -11 9 -13 M65 17 q9 -9 15 -9" fill="none" stroke="'+C.foam+'" stroke-width="4" stroke-linecap="round"/></g></svg>',
+    '<path d="M6 40 q16 -21 42 -14 q20 6 25 16 q-23 12 -44 8 q-17 -3 -23 -10 z" fill="'+G('gWhale')+'"/>'+
+    '<path d="M14 45 q21 10 45 4 q-20 9 -39 3 z" fill="#CDEBFA"/>'+
+    '<path d="M6 40 q-8 -13 -6 -20 q13 5 15 16 z" fill="#3E6698"/>'+
+    '<circle cx="62" cy="31" r="3.6" fill="#fff"/><circle cx="63" cy="31" r="1.8" fill="#2B3A4A"/>'+
+    '<path d="M56 15 q3 -12 10 -14 M66 17 q10 -10 16 -10" fill="none" stroke="#D8F3FC" stroke-width="4.5" stroke-linecap="round"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<path d="M8 46 q22 -36 58 -23 q11 4 15 13 q-24 -7 -37 4 q-17 13 -36 6 z" fill="#3FA9E0" '+OL+'/>'+
-    '<path d="M20 44 q20 4 34 -6 q-14 14 -34 6 z" fill="'+C.foam+'"/>'+
-    '<path d="M38 26 q7 -14 18 -13 q-5 11 -9 15 z" fill="#3F94BD" '+OLt+'/>'+
-    '<circle cx="71" cy="33" r="3" fill="#fff" '+OLt+'/><circle cx="72" cy="33" r="1.4" fill="#3A2B1E"/></g></svg>',
+    '<path d="M8 46 q22 -37 58 -24 q12 5 16 14 q-25 -8 -38 4 q-18 14 -37 6 z" fill="'+G('gDolphin')+'"/>'+
+    '<path d="M18 44 q22 5 37 -7 q-15 15 -37 7 z" fill="#CDEBFA"/>'+
+    '<path d="M38 25 q8 -15 19 -14 q-6 12 -10 16 z" fill="#2E7ED6" opacity=".75"/>'+
+    '<circle cx="72" cy="33" r="3.2" fill="#fff"/><circle cx="73" cy="33" r="1.5" fill="#2B3A4A"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<circle cx="45" cy="25" r="17" fill="'+C.pink+'" '+OL+'/>'+
-    '<circle cx="38" cy="23" r="3.6" fill="#fff" '+OLt+'/><circle cx="39" cy="23" r="1.7" fill="#3A2B1E"/>'+
-    '<circle cx="52" cy="23" r="3.6" fill="#fff" '+OLt+'/><circle cx="53" cy="23" r="1.7" fill="#3A2B1E"/>'+
-    '<path d="M45 31 q4 4 8 1" fill="none" stroke="#3A2B1E" stroke-width="2.2" stroke-linecap="round"/>'+
-    '<path d="M30 38 q-6 14 -12 18 M38 42 q-4 14 -9 18 M52 42 q4 14 9 18 M60 38 q6 14 12 18" '+
-    'fill="none" stroke="#3A2B1E" stroke-width="10" stroke-linecap="round"/>'+
-    '<path d="M30 38 q-6 14 -12 18 M38 42 q-4 14 -9 18 M52 42 q4 14 9 18 M60 38 q6 14 12 18" '+
-    'fill="none" stroke="'+C.pink+'" stroke-width="6" stroke-linecap="round"/>'+
-    '<path d="M30 38 q-6 14 -12 18 M38 42 q-4 14 -9 18 M52 42 q4 14 9 18 M60 38 q6 14 12 18" '+
-    'fill="none" stroke="#3A2B1E" stroke-width="9" stroke-linecap="round" opacity=".0"/></g></svg>',
+    '<path d="M30 38 q-7 15 -13 19 M39 42 q-5 15 -10 18 M51 42 q5 15 10 18 M60 38 q7 15 13 19" '+
+    'fill="none" stroke="'+G('gPink')+'" stroke-width="7" stroke-linecap="round"/>'+
+    '<circle cx="45" cy="26" r="18" fill="'+G('gPink')+'"/>'+
+    '<ellipse cx="38" cy="17" rx="7" ry="4" fill="#fff" opacity=".4"/>'+
+    '<circle cx="38" cy="25" r="4" fill="#fff"/><circle cx="39" cy="25" r="1.9" fill="#3A2B1E"/>'+
+    '<circle cx="53" cy="25" r="4" fill="#fff"/><circle cx="54" cy="25" r="1.9" fill="#3A2B1E"/>'+
+    '<path d="M43 33 q4 4 8 1" fill="none" stroke="#C2416F" stroke-width="2.2" stroke-linecap="round"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<path d="M44 10 l15 32 h-30 z" fill="'+C.rock+'" '+OL+'/>'+
-    '<path d="M44 16 l9 22 h-9 z" fill="'+C.rockD+'"/>'+
-    '<path d="M8 46 q18 -8 36 0 q18 8 38 0" fill="none" stroke="'+C.foam+'" stroke-width="5" stroke-linecap="round"/></g></svg>',
+    '<path d="M44 9 l16 33 h-32 z" fill="'+G('gRock')+'"/>'+
+    '<path d="M44 9 l16 33 h-9 z" fill="#5F7385" opacity=".55"/>'+
+    '<path d="M6 46 q19 -9 38 0 q19 9 40 0" fill="none" stroke="#D8F3FC" stroke-width="5" stroke-linecap="round"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<rect x="30" y="12" width="30" height="36" rx="10" fill="'+C.wood+'" '+OL+'/>'+
-    '<rect x="26" y="20" width="38" height="6" rx="2" fill="'+C.rockD+'" '+OLt+'/>'+
-    '<rect x="26" y="35" width="38" height="6" rx="2" fill="'+C.rockD+'" '+OLt+'/>'+
-    '<path d="M38 14 v33 M52 14 v33" stroke="'+C.woodD+'" stroke-width="2.5"/></g></svg>',
+    '<ellipse cx="45" cy="50" rx="20" ry="4" fill="#5A4020" opacity=".2"/>'+
+    '<rect x="30" y="12" width="30" height="36" rx="11" fill="'+G('gWood')+'"/>'+
+    '<rect x="33" y="13" width="7" height="34" rx="3" fill="#fff" opacity=".22"/>'+
+    '<rect x="26" y="20" width="38" height="6" rx="3" fill="#8C9BA8"/>'+
+    '<rect x="26" y="35" width="38" height="6" rx="3" fill="#8C9BA8"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<ellipse cx="45" cy="34" rx="20" ry="14" fill="'+C.leafD+'" '+OL+'/>'+
-    '<path d="M32 26 q13 -8 26 0 q-13 -3 -26 0 z" fill="'+C.leaf+'"/>'+
-    '<circle cx="66" cy="28" r="8" fill="'+C.grass+'" '+OL+'/>'+
-    '<circle cx="69" cy="26" r="2.6" fill="#fff" '+OLt+'/><circle cx="70" cy="26" r="1.3" fill="#3A2B1E"/>'+
-    '<path d="M28 44 q-7 5 -10 3 M60 46 q7 5 11 3" fill="none" stroke="'+C.leafD+'" stroke-width="5" stroke-linecap="round"/></g></svg>',
+    '<ellipse cx="45" cy="36" rx="21" ry="14" fill="'+G('gTurtle')+'"/>'+
+    '<path d="M30 30 q14 -9 28 0 q-14 -4 -28 0 z" fill="#fff" opacity=".35"/>'+
+    '<path d="M36 30 l5 8 l-5 7 M52 30 l-5 8 l5 7" stroke="#1E7A3C" stroke-width="2" fill="none" opacity=".6"/>'+
+    '<circle cx="67" cy="29" r="8.5" fill="'+G('gLeaf')+'"/>'+
+    '<circle cx="70" cy="27" r="2.8" fill="#fff"/><circle cx="71" cy="27" r="1.4" fill="#3A2B1E"/>'+
+    '<path d="M27 45 q-8 6 -11 4 M60 47 q8 6 12 4" fill="none" stroke="'+G('gLeafD')+'" stroke-width="6" stroke-linecap="round"/></g></svg>',
   ()=> '<svg viewBox="0 0 90 60"><g>'+
-    '<circle cx="45" cy="30" r="23" fill="'+C.cream+'" '+OL+'/>'+
-    '<path d="M45 8 l6 20 l-6 5 l-6 -5 z" fill="'+C.red+'" '+OLt+'/>'+
-    '<path d="M45 52 l6 -20 l-6 -5 l-6 5 z" fill="'+C.rockD+'" '+OLt+'/>'+
-    '<path d="M23 30 l20 -6 l4 6 l-4 6 z" fill="'+C.rockD+'" '+OLt+'/>'+
-    '<path d="M67 30 l-20 -6 l-4 6 l4 6 z" fill="'+C.cream+'" '+OLt+'/>'+
-    '<circle cx="45" cy="30" r="3" fill="'+C.gold+'" '+OLt+'/></g></svg>'
+    '<circle cx="45" cy="30" r="23" fill="'+G('gCream')+'" stroke="#C08A3A" stroke-width="2"/>'+
+    '<path d="M45 8 l6.5 21 l-6.5 5 l-6.5 -5 z" fill="'+G('gRed')+'"/>'+
+    '<path d="M45 52 l6.5 -21 l-6.5 -5 l-6.5 5 z" fill="#8C9BA8"/>'+
+    '<path d="M23 30 l21 -6.5 l5 6.5 l-5 6.5 z" fill="#8C9BA8"/>'+
+    '<path d="M67 30 l-21 -6.5 l-5 6.5 l5 6.5 z" fill="#E8DCBE"/>'+
+    '<circle cx="45" cy="30" r="3.2" fill="'+G('gGold')+'"/></g></svg>'
 ];
 
+function mascot(){
+  return '<svg viewBox="0 0 120 120" aria-hidden="true">'+
+    '<ellipse cx="60" cy="112" rx="30" ry="6" fill="#0B5C80" opacity=".28"/>'+
+    '<path d="M92 52 q18 20 6 40 q-14 14 -24 -4 z" fill="'+G('gBlue')+'"/>'+
+    '<path d="M22 62 q-14 6 -16 18 q12 -2 20 -8 z" fill="'+G('gGold')+'"/>'+
+    '<ellipse cx="58" cy="66" rx="26" ry="30" fill="'+G('gRed')+'"/>'+
+    '<path d="M48 46 q22 10 18 38 q-18 10 -26 -8 z" fill="'+G('gGold')+'"/>'+
+    '<circle cx="60" cy="34" r="21" fill="'+G('gRed')+'"/>'+
+    '<path d="M39 28 q20 -14 42 -2 q-6 -14 -22 -14 q-16 0 -20 16 z" fill="#2E7ED6"/>'+
+    '<path d="M39 28 q-8 3 -12 10 q10 2 15 -3 z" fill="#2E7ED6"/>'+
+    '<circle cx="52" cy="34" r="8" fill="#fff"/><circle cx="55" cy="35" r="4" fill="#3B2A1A"/>'+
+    '<circle cx="56.5" cy="33.5" r="1.5" fill="#fff"/>'+
+    '<circle cx="70" cy="34" r="8" fill="#fff"/><circle cx="73" cy="35" r="4" fill="#3B2A1A"/>'+
+    '<circle cx="74.5" cy="33.5" r="1.5" fill="#fff"/>'+
+    '<path d="M78 42 q16 6 2 15 q-8 -6 -6 -15 z" fill="'+G('gGold')+'"/>'+
+    '<path d="M50 96 l-6 12 M68 96 l6 12" stroke="#E8A100" stroke-width="7" stroke-linecap="round"/>'+
+    '<path d="M38 108 h14 M68 108 h14" stroke="#E8A100" stroke-width="7" stroke-linecap="round"/></svg>';
+}
 function shipSvg(){
   return '<svg viewBox="0 0 64 64" aria-hidden="true">'+
-    '<path d="M32 8 v32" stroke="'+C.woodD+'" stroke-width="5" stroke-linecap="round"/>'+
-    '<path d="M35 10 q18 10 0 19 z" fill="'+C.cream+'" '+OLt+'/>'+
-    '<path d="M29 13 q-14 8 0 15 z" fill="#FFE7A8" '+OLt+'/>'+
-    '<path d="M10 40 h44 l-8 15 h-28 z" fill="'+C.wood+'" '+OL+'/>'+
-    '<path d="M13 47 h38" stroke="'+C.woodD+'" stroke-width="3"/>'+
-    '<path d="M8 40 q24 9 48 0" fill="none" stroke="'+C.foam+'" stroke-width="4" stroke-linecap="round"/>'+
-    '<path d="M32 8 h10 l-3 4 l3 4 h-10" fill="'+C.red+'" '+OLt+'/></svg>';
+    '<path d="M32 8 v33" stroke="#7A4A1E" stroke-width="4.5" stroke-linecap="round"/>'+
+    '<path d="M35 10 q19 11 0 20 z" fill="'+G('gCream')+'"/>'+
+    '<path d="M29 13 q-15 9 0 16 z" fill="#F3E2BB"/>'+
+    '<path d="M10 41 h44 l-8 15 h-28 z" fill="'+G('gWood')+'"/>'+
+    '<path d="M10 41 h10 l-4 15 h-2 z" fill="#fff" opacity=".2"/>'+
+    '<path d="M13 48 h38" stroke="#7A431A" stroke-width="2.6" opacity=".7"/>'+
+    '<path d="M7 41 q25 10 50 0" fill="none" stroke="#D8F3FC" stroke-width="4" stroke-linecap="round"/>'+
+    '<path d="M32 8 h11 l-3.5 4.5 l3.5 4.5 h-11" fill="'+G('gRed')+'"/></svg>';
 }
 function chestSvg(open){
   const lid = open
     ? '<g transform="rotate(-15 20 50)">'+
-      '<path d="M16 46 q44 -34 88 0 l0 15 q-44 -30 -88 0 z" fill="'+C.wood+'" stroke="#3A2B1E" stroke-width="3.5" stroke-linejoin="round"/>'+
-      '<path d="M16 53 q44 -30 88 0" fill="none" stroke="'+C.woodD+'" stroke-width="3"/>'+
-      '<path d="M52 33 q8 -1 16 3 l0 15 q-8 -4 -16 -3 z" fill="'+C.goldD+'" stroke="#3A2B1E" stroke-width="3" stroke-linejoin="round"/>'+
-      '</g>'
-    : '<path d="M16 48 q44 -32 88 0 z" fill="'+C.woodD+'" stroke="#3A2B1E" stroke-width="3.5"/>';
+      '<path d="M16 46 q44 -34 88 0 l0 15 q-44 -30 -88 0 z" fill="'+G('gWood')+'"/>'+
+      '<path d="M16 46 q44 -34 88 0 q-44 -22 -88 6 z" fill="#fff" opacity=".22"/>'+
+      '<path d="M52 33 q8 -1 16 3 l0 15 q-8 -4 -16 -3 z" fill="'+G('gGold')+'"/></g>'
+    : '<path d="M16 48 q44 -32 88 0 z" fill="'+G('gWood')+'"/>';
   const gold = open
-    ? '<circle cx="43" cy="52" r="10" fill="'+C.gold+'" '+OLt+'/>'+
-      '<circle cx="62" cy="46" r="11" fill="#FFD95C" '+OLt+'/>'+
-      '<circle cx="80" cy="53" r="9" fill="'+C.gold+'" '+OLt+'/>'
+    ? '<circle cx="42" cy="52" r="10" fill="'+G('gGold')+'"/>'+
+      '<circle cx="62" cy="45" r="11.5" fill="#FFDD6E"/>'+
+      '<circle cx="81" cy="53" r="9" fill="'+G('gGold')+'"/>'+
+      '<ellipse cx="58" cy="41" rx="4" ry="2" fill="#fff" opacity=".7"/>'
     : '';
   return '<g>'+ gold +
-    '<rect x="16" y="54" width="88" height="42" rx="8" fill="'+C.wood+'" stroke="#3A2B1E" stroke-width="3.5"/>'+
-    '<path d="M30 54 v42 M60 54 v42 M90 54 v42" stroke="'+C.woodD+'" stroke-width="3"/>'+
-    '<rect x="12" y="63" width="96" height="10" rx="3" fill="'+C.goldD+'" stroke="#3A2B1E" stroke-width="3"/>'+
-    '<rect x="52" y="66" width="16" height="19" rx="3" fill="'+C.gold+'" stroke="#3A2B1E" stroke-width="3"/>'+
-    '<circle cx="60" cy="75" r="3" fill="'+C.woodD+'"/>'+
+    '<rect x="16" y="54" width="88" height="42" rx="9" fill="'+G('gWood')+'"/>'+
+    '<rect x="19" y="56" width="10" height="38" rx="5" fill="#fff" opacity=".2"/>'+
+    '<path d="M32 54 v42 M60 54 v42 M88 54 v42" stroke="#7A431A" stroke-width="2.6" opacity=".6"/>'+
+    '<rect x="12" y="63" width="96" height="10" rx="4" fill="'+G('gGold')+'"/>'+
+    '<rect x="52" y="66" width="16" height="19" rx="3" fill="'+G('gGold')+'"/>'+
+    '<circle cx="60" cy="75" r="3" fill="#8A5A12"/>'+
     lid + '</g>';
 }
 
@@ -737,6 +841,7 @@ function finish(){
   if(save.open < LEVELS.length && first) save.open = lidx + 2;
   store();
   $("#chest").innerHTML = chestSvg(true);
+  $("#mate").innerHTML = mascot();
   const box = $("#haul"); box.innerHTML="";
   for(let c=0;c<3;c++) box.insertAdjacentHTML("beforeend", coin(c<got));
   $("#donetitle").textContent = got===3 ? "Hele skatten!" : (got===2 ? "Godt gået!" : "Lidt guld!");
@@ -756,5 +861,6 @@ document.querySelectorAll("[data-home]").forEach(b=>{
   b.onclick = ()=>{ try{speechSynthesis.cancel();}catch(e){} show("s-map"); drawMap(); };
 });
 $("#chest").innerHTML = chestSvg(true);
+$("#mate").innerHTML = mascot();
 drawMap();
 </script>
